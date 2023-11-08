@@ -15,6 +15,7 @@
 
 package net.consensys.linea.zktracer.module.add;
 
+import java.io.File;
 import java.math.BigInteger;
 
 import net.consensys.linea.zktracer.bytestheta.BaseBytes;

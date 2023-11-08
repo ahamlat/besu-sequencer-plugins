@@ -90,8 +90,9 @@ public class RollupGenerateConflatedTracesToFileV0 {
           },
           tracer);
 
-      final String path = writeTraceToFile(tracer, params.runtimeVersion());
+      tracer.writeTrace();
 
+      String path = null;
       return new FileTrace(params.runtimeVersion(), path);
     } catch (Exception ex) {
       throw new PluginRpcEndpointException(ex.getMessage());
@@ -118,22 +119,6 @@ public class RollupGenerateConflatedTracesToFileV0 {
             () ->
                 new RuntimeException(
                     "Unable to find trace service. Please ensure TraceService is registered."));
-  }
-
-  private String writeTraceToFile(final ZkTracer tracer, final String traceRuntimeVersion) {
-    final File file = generateOutputFile(traceRuntimeVersion);
-    final OutputStream outputStream = createOutputStream(file);
-
-    try (JsonGenerator jsonGenerator =
-        jsonFactory.createGenerator(outputStream, JsonEncoding.UTF8)) {
-      jsonGenerator.useDefaultPrettyPrinter();
-      jsonGenerator.writeObject(tracer.getJsonTrace());
-
-    } catch (IOException e) {
-      throw new RuntimeException(e);
-    }
-
-    return file.getAbsolutePath();
   }
 
   private OutputStream createOutputStream(final File file) {

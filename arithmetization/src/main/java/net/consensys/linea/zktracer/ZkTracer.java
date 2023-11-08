@@ -15,9 +15,11 @@
 
 package net.consensys.linea.zktracer;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import lombok.RequiredArgsConstructor;
 import net.consensys.linea.zktracer.module.Module;
@@ -53,11 +55,23 @@ public class ZkTracer implements ZkBlockAwareOperationTracer {
     this.hub = new Hub();
   }
 
-  public ZkTrace getTrace() {
+  public void writeTrace() {
     for (Module module : this.hub.getModulesToTrace()) {
-      zkTraceBuilder.addTrace(module);
+      Optional.ofNullable(module.commit())
+              .ifPresent(
+                      v -> {
+                        if (v.length() != module.lineCount()) {
+                          throw new IllegalStateException(
+                                  "["
+                                          + module.jsonKey()
+                                          + "] lines expected: "
+                                          + module.lineCount()
+                                          + " -- lines found: "
+                                          + v.length());
+                        }
+                        assert v.length() == module.lineCount();
+                      });
     }
-    return zkTraceBuilder.build();
   }
 
   @Override
@@ -72,8 +86,9 @@ public class ZkTracer implements ZkBlockAwareOperationTracer {
 
   @Override
   public String getJsonTrace() {
-    return getTrace().toJson();
+    return null;
   }
+
 
   @Override
   public void traceStartBlock(final ProcessableBlockHeader processableBlockHeader) {
