@@ -51,6 +51,7 @@ public record Trace(
     private final BitSet filled = new BitSet();
     private final String moduleName;
 
+    private int lineCounter = 0;
     private BigInteger acc1;
     private BigInteger acc2;
     private BigInteger arg1Hi;
@@ -75,7 +76,7 @@ public record Trace(
         throw new RuntimeException("Cannot measure a trace with a non-validated row.");
       }
 
-      return 1;
+      return lineCounter;
     }
 
     public TraceBuilder acc1(final BigInteger b) {
@@ -86,7 +87,7 @@ public record Trace(
       }
 
       acc1 = b;
-
+      lineCounter++;
       return this;
     }
 
