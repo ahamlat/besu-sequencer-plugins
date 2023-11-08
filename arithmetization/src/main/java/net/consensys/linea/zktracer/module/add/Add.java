@@ -156,12 +156,14 @@ public class Add implements Module {
 
   @Override
   public ModuleTrace commit() {
-    final Trace.TraceBuilder trace = new Trace.TraceBuilder(this.lineCount());
+    final Trace.TraceBuilder trace = new Trace.TraceBuilder("add");
     for (AddOperation op : this.chunks) {
       this.traceAddOperation(op.opCodem(), op.arg1(), op.arg2(), trace);
     }
 
-    return new AddTrace(trace.build());
+    final AddTrace addTrace = new AddTrace(trace.build());
+    TraceWriter.flush();
+    return addTrace;
   }
 
   @Override

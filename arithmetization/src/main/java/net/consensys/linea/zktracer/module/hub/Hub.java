@@ -234,21 +234,21 @@ public class Hub implements Module {
    */
   public List<Module> getModulesToTrace() {
     return List.of(
-        this,
-        this.romLex,
-        this.add,
-        this.ext,
-        this.mod,
-        this.mul,
-        this.shf,
-        this.wcp,
-        this.mxp,
-        this.rlpTxn,
-        this.rlpTxrcpt,
-        this.rlpAddr,
-        this.rom,
-        this.txnData,
-        this.trm);
+        // this,
+        // this.romLex,
+        this.add);
+    /*this.ext,
+    this.mod,
+    this.mul,
+    this.shf,
+    this.wcp,
+    this.mxp,
+    this.rlpTxn,
+    this.rlpTxrcpt,
+    this.rlpAddr,
+    this.rom,
+    this.txnData,
+    this.trm)*/
   }
 
   @Override

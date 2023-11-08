@@ -16,11 +16,8 @@
 package net.consensys.linea.zktracer.module.add;
 
 import java.math.BigInteger;
-import java.util.ArrayList;
 import java.util.BitSet;
-import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import net.consensys.linea.zktracer.types.UnsignedByte;
 
 /**
@@ -28,88 +25,49 @@ import net.consensys.linea.zktracer.types.UnsignedByte;
  * and could lead to unexpected behavior. Please DO NOT ATTEMPT TO MODIFY this code directly.
  */
 public record Trace(
-    @JsonProperty("ACC_1") List<BigInteger> acc1,
-    @JsonProperty("ACC_2") List<BigInteger> acc2,
-    @JsonProperty("ARG_1_HI") List<BigInteger> arg1Hi,
-    @JsonProperty("ARG_1_LO") List<BigInteger> arg1Lo,
-    @JsonProperty("ARG_2_HI") List<BigInteger> arg2Hi,
-    @JsonProperty("ARG_2_LO") List<BigInteger> arg2Lo,
-    @JsonProperty("BYTE_1") List<UnsignedByte> byte1,
-    @JsonProperty("BYTE_2") List<UnsignedByte> byte2,
-    @JsonProperty("CT") List<BigInteger> ct,
-    @JsonProperty("INST") List<BigInteger> inst,
-    @JsonProperty("OVERFLOW") List<Boolean> overflow,
-    @JsonProperty("RES_HI") List<BigInteger> resHi,
-    @JsonProperty("RES_LO") List<BigInteger> resLo,
-    @JsonProperty("STAMP") List<BigInteger> stamp) {
-  static TraceBuilder builder(int length) {
-    return new TraceBuilder(length);
+    BigInteger acc1,
+    BigInteger acc2,
+    BigInteger arg1Hi,
+    BigInteger arg1Lo,
+    BigInteger arg2Hi,
+    BigInteger arg2Lo,
+    UnsignedByte byte1,
+    UnsignedByte byte2,
+    BigInteger ct,
+    BigInteger inst,
+    Boolean overflow,
+    BigInteger resHi,
+    BigInteger resLo,
+    BigInteger stamp) {
+  static TraceBuilder builder() {
+    return new TraceBuilder("add");
   }
 
   public int size() {
-    return this.acc1.size();
+    return this.acc1 == null ? 0 : 1;
   }
 
   static class TraceBuilder {
     private final BitSet filled = new BitSet();
+    private final String moduleName;
 
-    @JsonProperty("ACC_1")
-    private final List<BigInteger> acc1;
+    private BigInteger acc1;
+    private BigInteger acc2;
+    private BigInteger arg1Hi;
+    private BigInteger arg1Lo;
+    private BigInteger arg2Hi;
+    private BigInteger arg2Lo;
+    private UnsignedByte byte1;
+    private UnsignedByte byte2;
+    private BigInteger ct;
+    private BigInteger inst;
+    private Boolean overflow;
+    private BigInteger resHi;
+    private BigInteger resLo;
+    private BigInteger stamp;
 
-    @JsonProperty("ACC_2")
-    private final List<BigInteger> acc2;
-
-    @JsonProperty("ARG_1_HI")
-    private final List<BigInteger> arg1Hi;
-
-    @JsonProperty("ARG_1_LO")
-    private final List<BigInteger> arg1Lo;
-
-    @JsonProperty("ARG_2_HI")
-    private final List<BigInteger> arg2Hi;
-
-    @JsonProperty("ARG_2_LO")
-    private final List<BigInteger> arg2Lo;
-
-    @JsonProperty("BYTE_1")
-    private final List<UnsignedByte> byte1;
-
-    @JsonProperty("BYTE_2")
-    private final List<UnsignedByte> byte2;
-
-    @JsonProperty("CT")
-    private final List<BigInteger> ct;
-
-    @JsonProperty("INST")
-    private final List<BigInteger> inst;
-
-    @JsonProperty("OVERFLOW")
-    private final List<Boolean> overflow;
-
-    @JsonProperty("RES_HI")
-    private final List<BigInteger> resHi;
-
-    @JsonProperty("RES_LO")
-    private final List<BigInteger> resLo;
-
-    @JsonProperty("STAMP")
-    private final List<BigInteger> stamp;
-
-    TraceBuilder(int length) {
-      this.acc1 = new ArrayList<>(length);
-      this.acc2 = new ArrayList<>(length);
-      this.arg1Hi = new ArrayList<>(length);
-      this.arg1Lo = new ArrayList<>(length);
-      this.arg2Hi = new ArrayList<>(length);
-      this.arg2Lo = new ArrayList<>(length);
-      this.byte1 = new ArrayList<>(length);
-      this.byte2 = new ArrayList<>(length);
-      this.ct = new ArrayList<>(length);
-      this.inst = new ArrayList<>(length);
-      this.overflow = new ArrayList<>(length);
-      this.resHi = new ArrayList<>(length);
-      this.resLo = new ArrayList<>(length);
-      this.stamp = new ArrayList<>(length);
+    public TraceBuilder(final String moduleName) {
+      this.moduleName = moduleName;
     }
 
     public int size() {
@@ -117,7 +75,7 @@ public record Trace(
         throw new RuntimeException("Cannot measure a trace with a non-validated row.");
       }
 
-      return this.acc1.size();
+      return 1;
     }
 
     public TraceBuilder acc1(final BigInteger b) {
@@ -127,7 +85,7 @@ public record Trace(
         filled.set(0);
       }
 
-      acc1.add(b);
+      acc1 = b;
 
       return this;
     }
@@ -139,7 +97,7 @@ public record Trace(
         filled.set(1);
       }
 
-      acc2.add(b);
+      acc2 = b;
 
       return this;
     }
@@ -151,7 +109,7 @@ public record Trace(
         filled.set(2);
       }
 
-      arg1Hi.add(b);
+      arg1Hi = b;
 
       return this;
     }
@@ -163,7 +121,7 @@ public record Trace(
         filled.set(3);
       }
 
-      arg1Lo.add(b);
+      arg1Lo = b;
 
       return this;
     }
@@ -175,7 +133,7 @@ public record Trace(
         filled.set(4);
       }
 
-      arg2Hi.add(b);
+      arg2Hi = b;
 
       return this;
     }
@@ -187,7 +145,7 @@ public record Trace(
         filled.set(5);
       }
 
-      arg2Lo.add(b);
+      arg2Lo = b;
 
       return this;
     }
@@ -199,7 +157,7 @@ public record Trace(
         filled.set(6);
       }
 
-      byte1.add(b);
+      byte1 = b;
 
       return this;
     }
@@ -211,7 +169,7 @@ public record Trace(
         filled.set(7);
       }
 
-      byte2.add(b);
+      byte2 = b;
 
       return this;
     }
@@ -223,7 +181,7 @@ public record Trace(
         filled.set(8);
       }
 
-      ct.add(b);
+      ct = b;
 
       return this;
     }
@@ -235,7 +193,7 @@ public record Trace(
         filled.set(9);
       }
 
-      inst.add(b);
+      inst = b;
 
       return this;
     }
@@ -247,7 +205,7 @@ public record Trace(
         filled.set(10);
       }
 
-      overflow.add(b);
+      overflow = b;
 
       return this;
     }
@@ -259,7 +217,7 @@ public record Trace(
         filled.set(11);
       }
 
-      resHi.add(b);
+      resHi = b;
 
       return this;
     }
@@ -271,7 +229,7 @@ public record Trace(
         filled.set(12);
       }
 
-      resLo.add(b);
+      resLo = b;
 
       return this;
     }
@@ -283,7 +241,7 @@ public record Trace(
         filled.set(13);
       }
 
-      stamp.add(b);
+      stamp = b;
 
       return this;
     }
@@ -347,64 +305,66 @@ public record Trace(
 
       filled.clear();
 
+      TraceWriter.writeTrace(moduleName, build());
+
       return this;
     }
 
     public TraceBuilder fillAndValidateRow() {
       if (!filled.get(0)) {
-        acc1.add(BigInteger.ZERO);
+        acc1 = BigInteger.ZERO;
         this.filled.set(0);
       }
       if (!filled.get(1)) {
-        acc2.add(BigInteger.ZERO);
+        acc2 = BigInteger.ZERO;
         this.filled.set(1);
       }
       if (!filled.get(2)) {
-        arg1Hi.add(BigInteger.ZERO);
+        arg1Hi = BigInteger.ZERO;
         this.filled.set(2);
       }
       if (!filled.get(3)) {
-        arg1Lo.add(BigInteger.ZERO);
+        arg1Lo = BigInteger.ZERO;
         this.filled.set(3);
       }
       if (!filled.get(4)) {
-        arg2Hi.add(BigInteger.ZERO);
+        arg2Hi = BigInteger.ZERO;
         this.filled.set(4);
       }
       if (!filled.get(5)) {
-        arg2Lo.add(BigInteger.ZERO);
+        arg2Lo = BigInteger.ZERO;
         this.filled.set(5);
       }
       if (!filled.get(6)) {
-        byte1.add(UnsignedByte.of(0));
+        byte1 = UnsignedByte.of(0);
         this.filled.set(6);
       }
       if (!filled.get(7)) {
-        byte2.add(UnsignedByte.of(0));
+        byte2 = UnsignedByte.of(0);
         this.filled.set(7);
       }
       if (!filled.get(8)) {
-        ct.add(BigInteger.ZERO);
+        ct = BigInteger.ZERO;
         this.filled.set(8);
       }
       if (!filled.get(9)) {
-        inst.add(BigInteger.ZERO);
+        inst = BigInteger.ZERO;
         this.filled.set(9);
       }
       if (!filled.get(10)) {
-        overflow.add(false);
+        overflow = false;
         this.filled.set(10);
       }
       if (!filled.get(11)) {
-        resHi.add(BigInteger.ZERO);
+        resHi = BigInteger.ZERO;
         this.filled.set(11);
       }
       if (!filled.get(12)) {
-        resLo.add(BigInteger.ZERO);
+        resLo = BigInteger.ZERO;
         this.filled.set(12);
       }
       if (!filled.get(13)) {
-        stamp.add(BigInteger.ZERO);
+        stamp = BigInteger.ZERO;
         this.filled.set(13);
       }
 
