@@ -34,6 +34,7 @@ public class TraceWriter {
                               return new BufferedWriter(
                                   new FileWriter("/data/traces/%s/%s".formatted(moduleName, s)));
                             } catch (IOException e) {
+                              System.out.println("error trace " + e.getMessage());
                               throw new RuntimeException(e);
                             }
                           });
@@ -59,7 +60,7 @@ public class TraceWriter {
                     fileWriter.newLine();
                   }
                 } catch (Exception e) {
-                  System.out.println("Error invoking method: " + method);
+                  System.out.println("error trace " + method);
                 }
               }
             });
