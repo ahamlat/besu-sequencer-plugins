@@ -25,6 +25,7 @@ import net.consensys.linea.zktracer.types.UnsignedByte;
  * and could lead to unexpected behavior. Please DO NOT ATTEMPT TO MODIFY this code directly.
  */
 public record Trace(
+    int lineCounter,
     BigInteger acc1,
     BigInteger acc2,
     BigInteger arg1Hi,
@@ -44,7 +45,7 @@ public record Trace(
   }
 
   public int size() {
-    return this.acc1 == null ? 0 : 1;
+    return lineCounter;
   }
 
   static class TraceBuilder {
@@ -378,8 +379,21 @@ public record Trace(
       }
 
       return new Trace(
-          acc1, acc2, arg1Hi, arg1Lo, arg2Hi, arg2Lo, byte1, byte2, ct, inst, overflow, resHi,
-          resLo, stamp);
+          lineCounter,
+          acc1,
+          acc2,
+          arg1Hi,
+          arg1Lo,
+          arg2Hi,
+          arg2Lo,
+          byte1,
+          byte2,
+          ct,
+          inst,
+          overflow,
+          resHi,
+          resLo,
+          stamp);
     }
   }
 }
