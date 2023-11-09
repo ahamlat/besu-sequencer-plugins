@@ -85,7 +85,7 @@ public class TraceWriter {
 
   private static boolean isGetter(Method method) {
     if (!method.getName().startsWith("get")) return false;
-    if (method.getParameterCount() != 0) return false;
+    //if (method.getParameterCount() != 0) return false;
     return !void.class.equals(method.getReturnType());
   }
 }
