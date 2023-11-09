@@ -20,13 +20,15 @@ public class TraceWriter {
       new ConcurrentHashMap<>();
 
   public static void writeTrace(final String moduleName, final Trace traceLine) {
-      System.out.println("Line counter = " + traceLine.lineCounter());
     Stream<Method> methodsStream = Arrays.stream(Trace.class.getDeclaredMethods());
+
     methodsStream
         .parallel()
         .forEach(
             method -> {
+                System.out.println("Method = "+method);
               if (isGetter(method)) {
+                  System.out.println("isGetter(method) = "+method);
                 try {
                   BufferedWriter fileWriter =
                       stringFileWriterHashMap.computeIfAbsent(
