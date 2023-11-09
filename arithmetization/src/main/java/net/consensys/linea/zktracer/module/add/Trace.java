@@ -15,7 +15,6 @@
 
 package net.consensys.linea.zktracer.module.add;
 
-import java.io.File;
 import java.math.BigInteger;
 import java.util.BitSet;
 
@@ -41,6 +40,7 @@ public record Trace(
     BigInteger resHi,
     BigInteger resLo,
     BigInteger stamp) {
+
   static TraceBuilder builder() {
     return new TraceBuilder("add");
   }

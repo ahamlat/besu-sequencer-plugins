@@ -188,7 +188,7 @@ public class Rom implements Module {
 
   @Override
   public ModuleTrace commit() {
-    final Trace.TraceBuilder trace = Trace.builder(this.lineCount());
+    final Trace.TraceBuilder trace = Trace.builder();
 
     int cfi = 0;
     final int cfiInfty = this.romLex.sortedChunks.size();

@@ -22,10 +22,11 @@ import net.consensys.linea.zktracer.module.ModuleTrace;
  * WARNING: This code is generated automatically. Any modifications to this code may be overwritten
  * and could lead to unexpected behavior. Please DO NOT ATTEMPT TO MODIFY this code directly.
  */
-record RomTrace(@JsonProperty("Trace") Trace trace) implements ModuleTrace {
+record RomTrace(Trace trace) implements ModuleTrace {
 
   @Override
   public int length() {
     return this.trace.size();
   }
+
 }

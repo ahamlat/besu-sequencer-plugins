@@ -235,7 +235,7 @@ public class Hub implements Module {
     return List.of(
         // this,
         // this.romLex,
-        this.add);
+        this.add, this.mxp, this.rom);
     /*this.ext,
     this.mod,
     this.mul,
@@ -245,7 +245,7 @@ public class Hub implements Module {
     this.rlpTxn,
     this.rlpTxrcpt,
     this.rlpAddr,
-    this.rom,
+
     this.txnData,
     this.trm)*/
   }

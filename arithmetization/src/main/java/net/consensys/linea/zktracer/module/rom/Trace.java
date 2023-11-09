@@ -16,11 +16,8 @@
 package net.consensys.linea.zktracer.module.rom;
 
 import java.math.BigInteger;
-import java.util.ArrayList;
 import java.util.BitSet;
-import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import net.consensys.linea.zktracer.types.UnsignedByte;
 
 /**
@@ -28,141 +25,100 @@ import net.consensys.linea.zktracer.types.UnsignedByte;
  * and could lead to unexpected behavior. Please DO NOT ATTEMPT TO MODIFY this code directly.
  */
 public record Trace(
-    @JsonProperty("ACC") List<BigInteger> acc,
-    @JsonProperty("CODE_FRAGMENT_INDEX") List<BigInteger> codeFragmentIndex,
-    @JsonProperty("CODE_FRAGMENT_INDEX_INFTY") List<BigInteger> codeFragmentIndexInfty,
-    @JsonProperty("CODE_SIZE") List<BigInteger> codeSize,
-    @JsonProperty("CODESIZE_REACHED") List<Boolean> codesizeReached,
-    @JsonProperty("COUNTER") List<BigInteger> counter,
-    @JsonProperty("COUNTER_MAX") List<BigInteger> counterMax,
-    @JsonProperty("COUNTER_PUSH") List<BigInteger> counterPush,
-    @JsonProperty("INDEX") List<BigInteger> index,
-    @JsonProperty("IS_PUSH") List<Boolean> isPush,
-    @JsonProperty("IS_PUSH_DATA") List<Boolean> isPushData,
-    @JsonProperty("LIMB") List<BigInteger> limb,
-    @JsonProperty("nBYTES") List<BigInteger> nBytes,
-    @JsonProperty("nBYTES_ACC") List<BigInteger> nBytesAcc,
-    @JsonProperty("OPCODE") List<UnsignedByte> opcode,
-    @JsonProperty("PADDED_BYTECODE_BYTE") List<UnsignedByte> paddedBytecodeByte,
-    @JsonProperty("PROGRAMME_COUNTER") List<BigInteger> programmeCounter,
-    @JsonProperty("PUSH_FUNNEL_BIT") List<Boolean> pushFunnelBit,
-    @JsonProperty("PUSH_PARAMETER") List<BigInteger> pushParameter,
-    @JsonProperty("PUSH_VALUE_ACC") List<BigInteger> pushValueAcc,
-    @JsonProperty("PUSH_VALUE_HIGH") List<BigInteger> pushValueHigh,
-    @JsonProperty("PUSH_VALUE_LOW") List<BigInteger> pushValueLow,
-    @JsonProperty("VALID_JUMP_DESTINATION") List<Boolean> validJumpDestination) {
-  static TraceBuilder builder(int length) {
-    return new TraceBuilder(length);
+        int lineCounter,
+        BigInteger acc,
+    BigInteger codeFragmentIndex,
+    BigInteger codeFragmentIndexInfty,
+    BigInteger codeSize,
+    Boolean codesizeReached,
+    BigInteger counter,
+    BigInteger counterMax,
+    BigInteger counterPush,
+    BigInteger index,
+    Boolean isPush,
+    Boolean isPushData,
+    BigInteger limb,
+    BigInteger nBytes,
+    BigInteger nBytesAcc,
+    UnsignedByte opcode,
+    UnsignedByte paddedBytecodeByte,
+    BigInteger programmeCounter,
+    Boolean pushFunnelBit,
+    BigInteger pushParameter,
+    BigInteger pushValueAcc,
+    BigInteger pushValueHigh,
+    BigInteger pushValueLow,
+    Boolean validJumpDestination) {
+
+  static TraceBuilder builder() {
+    return new TraceBuilder("rom");
   }
 
   public int size() {
-    return this.acc.size();
+    return lineCounter;
   }
 
   static class TraceBuilder {
     private final BitSet filled = new BitSet();
+    private final String moduleName;
+    private int lineCounter = 0;
 
-    @JsonProperty("ACC")
-    private final List<BigInteger> acc;
-
-    @JsonProperty("CODE_FRAGMENT_INDEX")
-    private final List<BigInteger> codeFragmentIndex;
-
-    @JsonProperty("CODE_FRAGMENT_INDEX_INFTY")
-    private final List<BigInteger> codeFragmentIndexInfty;
-
-    @JsonProperty("CODE_SIZE")
-    private final List<BigInteger> codeSize;
-
-    @JsonProperty("CODESIZE_REACHED")
-    private final List<Boolean> codesizeReached;
-
-    @JsonProperty("COUNTER")
-    private final List<BigInteger> counter;
-
-    @JsonProperty("COUNTER_MAX")
-    private final List<BigInteger> counterMax;
-
-    @JsonProperty("COUNTER_PUSH")
-    private final List<BigInteger> counterPush;
-
-    @JsonProperty("INDEX")
-    private final List<BigInteger> index;
-
-    @JsonProperty("IS_PUSH")
-    private final List<Boolean> isPush;
-
-    @JsonProperty("IS_PUSH_DATA")
-    private final List<Boolean> isPushData;
-
-    @JsonProperty("LIMB")
-    private final List<BigInteger> limb;
-
-    @JsonProperty("nBYTES")
-    private final List<BigInteger> nBytes;
-
-    @JsonProperty("nBYTES_ACC")
-    private final List<BigInteger> nBytesAcc;
-
-    @JsonProperty("OPCODE")
-    private final List<UnsignedByte> opcode;
-
-    @JsonProperty("PADDED_BYTECODE_BYTE")
-    private final List<UnsignedByte> paddedBytecodeByte;
-
-    @JsonProperty("PROGRAMME_COUNTER")
-    private final List<BigInteger> programmeCounter;
-
-    @JsonProperty("PUSH_FUNNEL_BIT")
-    private final List<Boolean> pushFunnelBit;
-
-    @JsonProperty("PUSH_PARAMETER")
-    private final List<BigInteger> pushParameter;
-
-    @JsonProperty("PUSH_VALUE_ACC")
-    private final List<BigInteger> pushValueAcc;
-
-    @JsonProperty("PUSH_VALUE_HIGH")
-    private final List<BigInteger> pushValueHigh;
-
-    @JsonProperty("PUSH_VALUE_LOW")
-    private final List<BigInteger> pushValueLow;
-
-    @JsonProperty("VALID_JUMP_DESTINATION")
-    private final List<Boolean> validJumpDestination;
-
-    private TraceBuilder(int length) {
-      this.acc = new ArrayList<>(length);
-      this.codeFragmentIndex = new ArrayList<>(length);
-      this.codeFragmentIndexInfty = new ArrayList<>(length);
-      this.codeSize = new ArrayList<>(length);
-      this.codesizeReached = new ArrayList<>(length);
-      this.counter = new ArrayList<>(length);
-      this.counterMax = new ArrayList<>(length);
-      this.counterPush = new ArrayList<>(length);
-      this.index = new ArrayList<>(length);
-      this.isPush = new ArrayList<>(length);
-      this.isPushData = new ArrayList<>(length);
-      this.limb = new ArrayList<>(length);
-      this.nBytes = new ArrayList<>(length);
-      this.nBytesAcc = new ArrayList<>(length);
-      this.opcode = new ArrayList<>(length);
-      this.paddedBytecodeByte = new ArrayList<>(length);
-      this.programmeCounter = new ArrayList<>(length);
-      this.pushFunnelBit = new ArrayList<>(length);
-      this.pushParameter = new ArrayList<>(length);
-      this.pushValueAcc = new ArrayList<>(length);
-      this.pushValueHigh = new ArrayList<>(length);
-      this.pushValueLow = new ArrayList<>(length);
-      this.validJumpDestination = new ArrayList<>(length);
+    public TraceBuilder(final String moduleName) {
+      this.moduleName = moduleName;
     }
+
+    private BigInteger acc;
+
+    private BigInteger codeFragmentIndex;
+
+    private BigInteger codeFragmentIndexInfty;
+
+    private BigInteger codeSize;
+
+    private Boolean codesizeReached;
+
+    private BigInteger counter;
+    
+    private BigInteger counterMax;
+
+    private BigInteger counterPush;
+
+    private BigInteger index;
+
+    private Boolean isPush;
+
+    private Boolean isPushData;
+
+    private BigInteger limb;
+
+    private BigInteger nBytes;
+
+    private BigInteger nBytesAcc;
+
+    private UnsignedByte opcode;
+
+    private UnsignedByte paddedBytecodeByte;
+
+    private BigInteger programmeCounter;
+
+    private Boolean pushFunnelBit;
+
+    private BigInteger pushParameter;
+
+    private BigInteger pushValueAcc;
+
+    private BigInteger pushValueHigh;
+
+    private BigInteger pushValueLow;
+
+    private Boolean validJumpDestination;
 
     public int size() {
       if (!filled.isEmpty()) {
         throw new RuntimeException("Cannot measure a trace with a non-validated row.");
       }
 
-      return this.acc.size();
+      return lineCounter;
     }
 
     public TraceBuilder acc(final BigInteger b) {
@@ -172,8 +128,8 @@ public record Trace(
         filled.set(0);
       }
 
-      acc.add(b);
-
+      acc=b;
+      lineCounter++;
       return this;
     }
 
@@ -184,7 +140,7 @@ public record Trace(
         filled.set(2);
       }
 
-      codeFragmentIndex.add(b);
+      codeFragmentIndex=b;
 
       return this;
     }
@@ -196,7 +152,7 @@ public record Trace(
         filled.set(3);
       }
 
-      codeFragmentIndexInfty.add(b);
+      codeFragmentIndexInfty=b;
 
       return this;
     }
@@ -208,7 +164,7 @@ public record Trace(
         filled.set(4);
       }
 
-      codeSize.add(b);
+      codeSize=b;
 
       return this;
     }
@@ -220,7 +176,7 @@ public record Trace(
         filled.set(1);
       }
 
-      codesizeReached.add(b);
+      codesizeReached=b;
 
       return this;
     }
@@ -232,7 +188,7 @@ public record Trace(
         filled.set(5);
       }
 
-      counter.add(b);
+      counter=b;
 
       return this;
     }
@@ -244,7 +200,7 @@ public record Trace(
         filled.set(6);
       }
 
-      counterMax.add(b);
+      counterMax=b;
 
       return this;
     }
@@ -256,7 +212,7 @@ public record Trace(
         filled.set(7);
       }
 
-      counterPush.add(b);
+      counterPush=b;
 
       return this;
     }
@@ -268,7 +224,7 @@ public record Trace(
         filled.set(8);
       }
 
-      index.add(b);
+      index=b;
 
       return this;
     }
@@ -280,7 +236,7 @@ public record Trace(
         filled.set(9);
       }
 
-      isPush.add(b);
+      isPush=b;
 
       return this;
     }
@@ -292,7 +248,7 @@ public record Trace(
         filled.set(10);
       }
 
-      isPushData.add(b);
+      isPushData=b;
 
       return this;
     }
@@ -304,7 +260,7 @@ public record Trace(
         filled.set(11);
       }
 
-      limb.add(b);
+      limb=b;
 
       return this;
     }
@@ -316,7 +272,7 @@ public record Trace(
         filled.set(21);
       }
 
-      nBytes.add(b);
+      nBytes=b;
 
       return this;
     }
@@ -328,7 +284,7 @@ public record Trace(
         filled.set(22);
       }
 
-      nBytesAcc.add(b);
+      nBytesAcc=b;
 
       return this;
     }
@@ -340,7 +296,7 @@ public record Trace(
         filled.set(12);
       }
 
-      opcode.add(b);
+      opcode=b;
 
       return this;
     }
@@ -352,7 +308,7 @@ public record Trace(
         filled.set(13);
       }
 
-      paddedBytecodeByte.add(b);
+      paddedBytecodeByte=b;
 
       return this;
     }
@@ -364,7 +320,7 @@ public record Trace(
         filled.set(14);
       }
 
-      programmeCounter.add(b);
+      programmeCounter=b;
 
       return this;
     }
@@ -376,7 +332,7 @@ public record Trace(
         filled.set(15);
       }
 
-      pushFunnelBit.add(b);
+      pushFunnelBit=b;
 
       return this;
     }
@@ -388,7 +344,7 @@ public record Trace(
         filled.set(16);
       }
 
-      pushParameter.add(b);
+      pushParameter=b;
 
       return this;
     }
@@ -400,7 +356,7 @@ public record Trace(
         filled.set(17);
       }
 
-      pushValueAcc.add(b);
+      pushValueAcc=b;
 
       return this;
     }
@@ -412,7 +368,7 @@ public record Trace(
         filled.set(18);
       }
 
-      pushValueHigh.add(b);
+      pushValueHigh=b;
 
       return this;
     }
@@ -424,7 +380,7 @@ public record Trace(
         filled.set(19);
       }
 
-      pushValueLow.add(b);
+      pushValueLow=b;
 
       return this;
     }
@@ -436,7 +392,7 @@ public record Trace(
         filled.set(20);
       }
 
-      validJumpDestination.add(b);
+      validJumpDestination=b;
 
       return this;
     }
@@ -536,100 +492,102 @@ public record Trace(
 
       filled.clear();
 
+      TraceWriter.writeTrace(moduleName, build());
+
       return this;
     }
 
     public TraceBuilder fillAndValidateRow() {
       if (!filled.get(0)) {
-        acc.add(BigInteger.ZERO);
+        acc=BigInteger.ZERO;
         this.filled.set(0);
       }
       if (!filled.get(2)) {
-        codeFragmentIndex.add(BigInteger.ZERO);
+        codeFragmentIndex= BigInteger.ZERO;
         this.filled.set(2);
       }
       if (!filled.get(3)) {
-        codeFragmentIndexInfty.add(BigInteger.ZERO);
+        codeFragmentIndexInfty= BigInteger.ZERO;
         this.filled.set(3);
       }
       if (!filled.get(4)) {
-        codeSize.add(BigInteger.ZERO);
+        codeSize= BigInteger.ZERO;
         this.filled.set(4);
       }
       if (!filled.get(1)) {
-        codesizeReached.add(false);
+        codesizeReached = false;
         this.filled.set(1);
       }
       if (!filled.get(5)) {
-        counter.add(BigInteger.ZERO);
+        counter= BigInteger.ZERO;
         this.filled.set(5);
       }
       if (!filled.get(6)) {
-        counterMax.add(BigInteger.ZERO);
+        counterMax= BigInteger.ZERO;
         this.filled.set(6);
       }
       if (!filled.get(7)) {
-        counterPush.add(BigInteger.ZERO);
+        counterPush= BigInteger.ZERO;
         this.filled.set(7);
       }
       if (!filled.get(8)) {
-        index.add(BigInteger.ZERO);
+        index= BigInteger.ZERO;
         this.filled.set(8);
       }
       if (!filled.get(9)) {
-        isPush.add(false);
+        isPush = false;
         this.filled.set(9);
       }
       if (!filled.get(10)) {
-        isPushData.add(false);
+        isPushData = false;
         this.filled.set(10);
       }
       if (!filled.get(11)) {
-        limb.add(BigInteger.ZERO);
+        limb = BigInteger.ZERO;
         this.filled.set(11);
       }
       if (!filled.get(21)) {
-        nBytes.add(BigInteger.ZERO);
+        nBytes= BigInteger.ZERO;
         this.filled.set(21);
       }
       if (!filled.get(22)) {
-        nBytesAcc.add(BigInteger.ZERO);
+        nBytesAcc= BigInteger.ZERO;
         this.filled.set(22);
       }
       if (!filled.get(12)) {
-        opcode.add(UnsignedByte.of(0));
+        opcode = UnsignedByte.of(0);
         this.filled.set(12);
       }
       if (!filled.get(13)) {
-        paddedBytecodeByte.add(UnsignedByte.of(0));
+        paddedBytecodeByte = UnsignedByte.of(0);
         this.filled.set(13);
       }
       if (!filled.get(14)) {
-        programmeCounter.add(BigInteger.ZERO);
+        programmeCounter= BigInteger.ZERO;
         this.filled.set(14);
       }
       if (!filled.get(15)) {
-        pushFunnelBit.add(false);
+        pushFunnelBit = false;
         this.filled.set(15);
       }
       if (!filled.get(16)) {
-        pushParameter.add(BigInteger.ZERO);
+        pushParameter= BigInteger.ZERO;
         this.filled.set(16);
       }
       if (!filled.get(17)) {
-        pushValueAcc.add(BigInteger.ZERO);
+        pushValueAcc= BigInteger.ZERO;
         this.filled.set(17);
       }
       if (!filled.get(18)) {
-        pushValueHigh.add(BigInteger.ZERO);
+        pushValueHigh= BigInteger.ZERO;
         this.filled.set(18);
       }
       if (!filled.get(19)) {
-        pushValueLow.add(BigInteger.ZERO);
+        pushValueLow= BigInteger.ZERO;
         this.filled.set(19);
       }
       if (!filled.get(20)) {
-        validJumpDestination.add(false);
+        validJumpDestination = false;
         this.filled.set(20);
       }
 
@@ -642,6 +600,7 @@ public record Trace(
       }
 
       return new Trace(
+              lineCounter,
           acc,
           codeFragmentIndex,
           codeFragmentIndexInfty,
