@@ -208,7 +208,7 @@ public class Hub implements Module {
             this.blake2);
 
     this.modules =
-        Stream.concat(
+      /*  Stream.concat(
                 Stream.of(
                     this.romLex, // romLex must be called before modules requiring CodeFragmentIndex
                     // (Rom, RlpTxn, TxnData, RAM, TODO: HUB)
@@ -225,7 +225,8 @@ public class Hub implements Module {
                     this.rom,
                     this.txnData,
                     this.trm),
-                this.precompileModules.stream())
+                this.precompileModules.stream())*/
+            Stream.of(this.add)
             .toList();
   }
 

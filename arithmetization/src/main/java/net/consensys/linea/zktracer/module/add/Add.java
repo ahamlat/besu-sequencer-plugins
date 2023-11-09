@@ -158,6 +158,7 @@ public class Add implements Module {
   @Override
   public ModuleTrace commit() {
     final Trace.TraceBuilder trace = new Trace.TraceBuilder("add");
+    System.out.println("Chunks size = "+chunks.size());
     for (AddOperation op : this.chunks) {
       this.traceAddOperation(op.opCodem(), op.arg1(), op.arg2(), trace);
     }

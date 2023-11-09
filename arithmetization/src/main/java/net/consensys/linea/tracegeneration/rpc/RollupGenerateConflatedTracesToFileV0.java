@@ -90,6 +90,7 @@ public class RollupGenerateConflatedTracesToFileV0 {
           },
           tracer);
 
+      // All the blocks are already executer and chuncks generated
       tracer.writeTrace();
 
       String path = null;

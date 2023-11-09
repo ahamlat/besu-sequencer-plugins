@@ -20,6 +20,7 @@ public class TraceWriter {
       new ConcurrentHashMap<>();
 
   public static void writeTrace(final String moduleName, final Trace traceLine) {
+      System.out.println("Line counter = " + traceLine.lineCounter());
     Stream<Method> methodsStream = Arrays.stream(Trace.class.getDeclaredMethods());
     methodsStream
         .parallel()
