@@ -32,9 +32,11 @@ public class TraceWriter {
                       stringFileWriterHashMap.computeIfAbsent(
                           method.getName().substring(3),
                           s -> {
+                              String fileName = "/data/traces/%s/%s".formatted(moduleName, s);
+                              System.out.println("Filename for "+s+" : "+fileName);
                             try {
                               return new BufferedWriter(
-                                  new FileWriter("/data/traces/%s/%s".formatted(moduleName, s)));
+                                  new FileWriter(fileName));
                             } catch (IOException e) {
                               System.out.println("error trace " + e.getMessage());
                               throw new RuntimeException(e);
