@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Stream;
 
+import net.consensys.linea.zktracer.types.UnsignedByte;
 import org.apache.tuweni.bytes.Bytes;
 
 public class TraceWriter {
@@ -27,8 +28,8 @@ public class TraceWriter {
         .forEach(
             method -> {
                 System.out.println("Method -=- "+method);
-              if (isGetter(method)) {
-                  System.out.println("isGetter(method) = "+method);
+              if (isMethodToTrace(method)) {
+                  System.out.println("isMethodToTrace(method) = "+method);
                 try {
                   BufferedWriter fileWriter =
                       stringFileWriterHashMap.computeIfAbsent(
@@ -83,8 +84,9 @@ public class TraceWriter {
         });
   }
 
-  private static boolean isGetter(Method method) {
-    if (method.getName().startsWith("get")) return true;
+  private static boolean isMethodToTrace(Method method) {
+    if (method.getReturnType().equals(BigInteger.class) || method.getReturnType().equals(UnsignedByte.class)) return true;
+    else if (method.getName().contains("overflow")) return true;
     else return false;
   }
 }

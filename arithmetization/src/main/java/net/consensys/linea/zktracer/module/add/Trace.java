@@ -81,7 +81,7 @@ public record Trace(
       return lineCounter;
     }
 
-    public TraceBuilder getAcc1(final BigInteger b) {
+    public TraceBuilder acc1(final BigInteger b) {
       if (filled.get(0)) {
         throw new IllegalStateException("ACC_1 already set");
       } else {
@@ -93,7 +93,7 @@ public record Trace(
       return this;
     }
 
-    public TraceBuilder getAcc2(final BigInteger b) {
+    public TraceBuilder acc2(final BigInteger b) {
       if (filled.get(1)) {
         throw new IllegalStateException("ACC_2 already set");
       } else {
@@ -105,7 +105,7 @@ public record Trace(
       return this;
     }
 
-    public TraceBuilder getArg1Hi(final BigInteger b) {
+    public TraceBuilder arg1Hi(final BigInteger b) {
       if (filled.get(2)) {
         throw new IllegalStateException("ARG_1_HI already set");
       } else {
@@ -117,7 +117,7 @@ public record Trace(
       return this;
     }
 
-    public TraceBuilder getArg1Lo(final BigInteger b) {
+    public TraceBuilder arg1Lo(final BigInteger b) {
       if (filled.get(3)) {
         throw new IllegalStateException("ARG_1_LO already set");
       } else {
@@ -129,7 +129,7 @@ public record Trace(
       return this;
     }
 
-    public TraceBuilder getArg2Hi(final BigInteger b) {
+    public TraceBuilder arg2Hi(final BigInteger b) {
       if (filled.get(4)) {
         throw new IllegalStateException("ARG_2_HI already set");
       } else {
@@ -141,7 +141,7 @@ public record Trace(
       return this;
     }
 
-    public TraceBuilder getArg2Lo(final BigInteger b) {
+    public TraceBuilder arg2Lo(final BigInteger b) {
       if (filled.get(5)) {
         throw new IllegalStateException("ARG_2_LO already set");
       } else {
@@ -153,7 +153,7 @@ public record Trace(
       return this;
     }
 
-    public TraceBuilder getByte1(final UnsignedByte b) {
+    public TraceBuilder byte1(final UnsignedByte b) {
       if (filled.get(6)) {
         throw new IllegalStateException("BYTE_1 already set");
       } else {
@@ -165,7 +165,7 @@ public record Trace(
       return this;
     }
 
-    public TraceBuilder getByte2(final UnsignedByte b) {
+    public TraceBuilder byte2(final UnsignedByte b) {
       if (filled.get(7)) {
         throw new IllegalStateException("BYTE_2 already set");
       } else {
@@ -177,7 +177,7 @@ public record Trace(
       return this;
     }
 
-    public TraceBuilder getCt(final BigInteger b) {
+    public TraceBuilder ct(final BigInteger b) {
       if (filled.get(8)) {
         throw new IllegalStateException("CT already set");
       } else {
@@ -189,7 +189,7 @@ public record Trace(
       return this;
     }
 
-    public TraceBuilder getInst(final BigInteger b) {
+    public TraceBuilder inst(final BigInteger b) {
       if (filled.get(9)) {
         throw new IllegalStateException("INST already set");
       } else {
@@ -201,7 +201,7 @@ public record Trace(
       return this;
     }
 
-    public TraceBuilder getOverflow(final Boolean b) {
+    public TraceBuilder overflow(final Boolean b) {
       if (filled.get(10)) {
         throw new IllegalStateException("OVERFLOW already set");
       } else {
@@ -213,7 +213,7 @@ public record Trace(
       return this;
     }
 
-    public TraceBuilder getResHi(final BigInteger b) {
+    public TraceBuilder resHi(final BigInteger b) {
       if (filled.get(11)) {
         throw new IllegalStateException("RES_HI already set");
       } else {
@@ -225,7 +225,7 @@ public record Trace(
       return this;
     }
 
-    public TraceBuilder getResLo(final BigInteger b) {
+    public TraceBuilder resLo(final BigInteger b) {
       if (filled.get(12)) {
         throw new IllegalStateException("RES_LO already set");
       } else {
@@ -237,7 +237,7 @@ public record Trace(
       return this;
     }
 
-    public TraceBuilder getStamp(final BigInteger b) {
+    public TraceBuilder stamp(final BigInteger b) {
       if (filled.get(13)) {
         throw new IllegalStateException("STAMP already set");
       } else {
