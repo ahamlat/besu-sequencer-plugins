@@ -207,26 +207,24 @@ public class Hub implements Module {
             this.ecpairingWeightedCall,
             this.blake2);
 
-    this.modules =
-      /*  Stream.concat(
-                Stream.of(
-                    this.romLex, // romLex must be called before modules requiring CodeFragmentIndex
-                    // (Rom, RlpTxn, TxnData, RAM, TODO: HUB)
-                    this.add,
-                    this.ext,
-                    this.mod,
-                    this.mul,
-                    this.mxp,
-                    this.shf,
-                    this.wcp,
-                    this.rlpTxn,
-                    this.rlpTxrcpt,
-                    this.rlpAddr,
-                    this.rom,
-                    this.txnData,
-                    this.trm),
-                this.precompileModules.stream())*/
-            Stream.of(this.add)
+    this.modules = Stream.concat(
+                    Stream.of(
+                            this.romLex, // romLex must be called before modules requiring CodeFragmentIndex
+                            // (Rom, RlpTxn, TxnData, RAM, TODO: HUB)
+                            this.add,
+                            this.ext,
+                            this.mod,
+                            this.mul,
+                            this.mxp,
+                            this.shf,
+                            this.wcp,
+                            this.rlpTxn,
+                            this.rlpTxrcpt,
+                            this.rlpAddr,
+                            this.rom,
+                            this.txnData,
+                            this.trm),
+                    this.precompileModules.stream())
             .toList();
   }
 
