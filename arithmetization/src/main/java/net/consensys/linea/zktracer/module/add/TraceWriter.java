@@ -27,16 +27,13 @@ public class TraceWriter {
         .parallel()
         .forEach(
             method -> {
-                System.out.println("Method -=- "+method);
               if (isMethodToTrace(method)) {
-                  System.out.println("isMethodToTrace(method) = "+method);
                 try {
                   BufferedWriter fileWriter =
                       stringFileWriterHashMap.computeIfAbsent(
-                          method.getName().substring(3),
+                          method.getName(),
                           s -> {
                               String fileName = "/data/traces/%s/%s".formatted(moduleName, s);
-                              System.out.println("Filename for "+s+" : "+fileName);
                             try {
                               return new BufferedWriter(
                                   new FileWriter(fileName));
