@@ -137,20 +137,20 @@ public class Add implements Module {
       overflowLo = (addRes.compareTo(TWO_TO_THE_128) >= 0);
 
       trace
-          .acc1(resHi.slice(0, 1 + i).toUnsignedBigInteger())
-          .acc2(resLo.slice(0, 1 + i).toUnsignedBigInteger())
-          .arg1Hi(arg1Hi.toUnsignedBigInteger())
-          .arg1Lo(arg1Lo.toUnsignedBigInteger())
-          .arg2Hi(arg2Hi.toUnsignedBigInteger())
-          .arg2Lo(arg2Lo.toUnsignedBigInteger())
-          .byte1(UnsignedByte.of(resHi.get(i)))
-          .byte2(UnsignedByte.of(resLo.get(i)))
-          .ct(BigInteger.valueOf(i))
-          .inst(BigInteger.valueOf(opCodeData.value()))
-          .overflow(overflowBit(i, overflowHi, overflowLo))
-          .resHi(resHi.toUnsignedBigInteger())
-          .resLo(resLo.toUnsignedBigInteger())
-          .stamp(BigInteger.valueOf(stamp))
+          .getAcc1(resHi.slice(0, 1 + i).toUnsignedBigInteger())
+          .getAcc2(resLo.slice(0, 1 + i).toUnsignedBigInteger())
+          .getArg1Hi(arg1Hi.toUnsignedBigInteger())
+          .getArg1Lo(arg1Lo.toUnsignedBigInteger())
+          .getArg2Hi(arg2Hi.toUnsignedBigInteger())
+          .getArg2Lo(arg2Lo.toUnsignedBigInteger())
+          .getByte1(UnsignedByte.of(resHi.get(i)))
+          .getByte2(UnsignedByte.of(resLo.get(i)))
+          .getCt(BigInteger.valueOf(i))
+          .getInst(BigInteger.valueOf(opCodeData.value()))
+          .getOverflow(overflowBit(i, overflowHi, overflowLo))
+          .getResHi(resHi.toUnsignedBigInteger())
+          .getResLo(resLo.toUnsignedBigInteger())
+          .getStamp(BigInteger.valueOf(stamp))
           .validateRow();
     }
   }
