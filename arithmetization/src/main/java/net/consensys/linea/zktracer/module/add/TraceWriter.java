@@ -1,9 +1,7 @@
 package net.consensys.linea.zktracer.module.add;
 
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.lang.reflect.Method;
@@ -21,10 +19,12 @@ import org.apache.tuweni.bytes.Bytes;
 
 public class TraceWriter {
 
-  private static final Map<String, BufferedWriter> stringFileWriterHashMap =
-      new ConcurrentHashMap<>();
+    private static final Map<String, FileWriter> stringFileWriterHashMap =
+            new ConcurrentHashMap<>();
 
-  public static void writeTrace(final String moduleName, final Trace traceLine) {
+    record FileWriter(FileOutputStream fileOutputStream, GZIPOutputStream gzipOutputStream, OutputStreamWriter outputStreamWriter, BufferedWriter bufferedWriter){};
+
+    public static void writeTrace(final String moduleName, final Trace traceLine) {
     Stream<Method> methodsStream = Arrays.stream(Trace.class.getDeclaredMethods());
 
     methodsStream
@@ -34,21 +34,21 @@ public class TraceWriter {
               if (isMethodToTrace(method)) {
                 try {
 
-                  BufferedWriter fileWriter =
-                      stringFileWriterHashMap.computeIfAbsent(
-                          method.getName(),
-                          s -> {
-                              String fileName = "/data/traces/%s/%s".formatted(moduleName, s);
-                            try {
-                                FileOutputStream fos = new FileOutputStream(fileName);
-                                GZIPOutputStream gos = new GZIPOutputStream(fos);
-                                OutputStreamWriter osw = new OutputStreamWriter(gos, StandardCharsets.UTF_8);
-                                return new BufferedWriter(osw);
-                            } catch (IOException e) {
-                              System.out.println("error trace " + e.getMessage());
-                              throw new RuntimeException(e);
-                            }
-                          });
+                    BufferedWriter fileWriter =
+                            stringFileWriterHashMap.computeIfAbsent(
+                                    method.getName(),
+                                    s -> {
+                                        String fileName = "/data/traces/%s/%s".formatted(moduleName, s);
+                                        try {
+                                            FileOutputStream fos = new FileOutputStream(fileName);
+                                            GZIPOutputStream gos = new GZIPOutputStream(fos);
+                                            OutputStreamWriter osw = new OutputStreamWriter(gos, StandardCharsets.UTF_8);
+                                            return new FileWriter(fos,gos,osw, new BufferedWriter(osw));
+                                        } catch (IOException e) {
+                                            System.out.println("error trace " + e.getMessage());
+                                            throw new RuntimeException(e);
+                                        }
+                                    }).bufferedWriter();
                   Object invoke = method.invoke(traceLine);
                   if (invoke instanceof BigInteger) {
                     fileWriter.write(
@@ -74,16 +74,19 @@ public class TraceWriter {
             });
   }
 
-  public static void flush() {
-    stringFileWriterHashMap.forEach(
-        (s, fileOutputStream) -> {
-          try {
-            fileOutputStream.close();
-          } catch (IOException e) {
-            throw new RuntimeException(e);
-          }
-        });
-  }
+    public static void flush() {
+        stringFileWriterHashMap.forEach(
+                (s, writer) -> {
+                    try {
+                        writer.fileOutputStream.close();
+                        writer.gzipOutputStream.close();
+                        writer.outputStreamWriter.close();
+                        writer.bufferedWriter.close();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+    }
 
   private static boolean isMethodToTrace(Method method) {
     if (method.getReturnType().equals(BigInteger.class) || method.getReturnType().equals(UnsignedByte.class)) return true;

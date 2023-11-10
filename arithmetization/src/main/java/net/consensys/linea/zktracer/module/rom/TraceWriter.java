@@ -19,32 +19,32 @@ import java.util.zip.GZIPOutputStream;
 
 public class TraceWriter {
 
-  private static final Map<String, BufferedWriter> stringFileWriterHashMap =
-      new ConcurrentHashMap<>();
+    private static final Map<String, FileWriter> stringFileWriterHashMap =
+            new ConcurrentHashMap<>();
+    record FileWriter(FileOutputStream fileOutputStream, GZIPOutputStream gzipOutputStream, OutputStreamWriter outputStreamWriter, BufferedWriter bufferedWriter){};
 
-  public static void writeTrace(final String moduleName, final Trace traceLine) {
-    Stream<Method> methodsStream = Arrays.stream(Trace.class.getDeclaredMethods());
-
+    public static void writeTrace(final String moduleName, final Trace traceLine) {
+        Stream<Method> methodsStream = Arrays.stream(Trace.class.getDeclaredMethods());
     methodsStream
         .forEach(
             method -> {
               if (isGetter(method)) {
                 try {
-                  BufferedWriter fileWriter =
-                      stringFileWriterHashMap.computeIfAbsent(
-                          method.getName(),
-                          s -> {
-                              String fileName = "/data/traces/%s/%s".formatted(moduleName, s);
-                            try {
-                                FileOutputStream fos = new FileOutputStream(fileName);
-                                GZIPOutputStream gos = new GZIPOutputStream(fos);
-                                OutputStreamWriter osw = new OutputStreamWriter(gos, StandardCharsets.UTF_8);
-                                return new BufferedWriter(osw);
-                            } catch (IOException e) {
-                              System.out.println("error trace " + e.getMessage());
-                              throw new RuntimeException(e);
-                            }
-                          });
+                    BufferedWriter fileWriter =
+                            stringFileWriterHashMap.computeIfAbsent(
+                                    method.getName(),
+                                    s -> {
+                                        String fileName = "/data/traces/%s/%s".formatted(moduleName, s);
+                                        try {
+                                            FileOutputStream fos = new FileOutputStream(fileName);
+                                            GZIPOutputStream gos = new GZIPOutputStream(fos);
+                                            OutputStreamWriter osw = new OutputStreamWriter(gos, StandardCharsets.UTF_8);
+                                            return new FileWriter(fos,gos,osw, new BufferedWriter(osw));
+                                        } catch (IOException e) {
+                                            System.out.println("error trace " + e.getMessage());
+                                            throw new RuntimeException(e);
+                                        }
+                                    }).bufferedWriter();
                   Object invoke = method.invoke(traceLine);
                   if (invoke instanceof BigInteger) {
                     fileWriter.write(
@@ -78,16 +78,19 @@ public class TraceWriter {
             });
   }
 
-  public static void flush() {
-    stringFileWriterHashMap.forEach(
-        (s, fileOutputStream) -> {
-          try {
-            fileOutputStream.close();
-          } catch (IOException e) {
-            throw new RuntimeException(e);
-          }
-        });
-  }
+    public static void flush() {
+        stringFileWriterHashMap.forEach(
+                (s, writer) -> {
+                    try {
+                        writer.fileOutputStream.close();
+                        writer.gzipOutputStream.close();
+                        writer.outputStreamWriter.close();
+                        writer.bufferedWriter.close();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+    }
 
     private static boolean isGetter(Method method) {
         if(!method.getName().startsWith("get"))      return false;
