@@ -23,9 +23,10 @@ public class TraceWriter {
     Stream<Method> methodsStream = Arrays.stream(Trace.class.getDeclaredMethods());
 
     methodsStream
+        .parallel()
         .forEach(
             method -> {
-              if (isMethodToTrace(method)) {
+              if (isGetter(method)) {
                 try {
                   BufferedWriter fileWriter =
                       stringFileWriterHashMap.computeIfAbsent(
@@ -84,9 +85,8 @@ public class TraceWriter {
         });
   }
 
-  private static boolean isMethodToTrace(Method method) {
-    if (method.getReturnType().equals(BigInteger.class) || method.getReturnType().equals(UnsignedByte.class)) return true;
-    else if (method.getName().contains("codesizeReached") || method.getName().contains("isPush") || method.getName().contains("isPushData") || method.getName().contains("pushFunnelBit") || method.getName().contains("validJumpDestination") ) return true;
-    else return false;
-  }
+    private static boolean isGetter(Method method) {
+        if (method.getName().startsWith("get")) return true;
+        else return false;
+    }
 }

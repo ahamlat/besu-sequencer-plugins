@@ -24,31 +24,151 @@ import net.consensys.linea.zktracer.types.UnsignedByte;
  * WARNING: This code is generated automatically. Any modifications to this code may be overwritten
  * and could lead to unexpected behavior. Please DO NOT ATTEMPT TO MODIFY this code directly.
  */
-public record Trace(
-        int lineCounter,
-        BigInteger acc,
-    BigInteger codeFragmentIndex,
-    BigInteger codeFragmentIndexInfty,
-    BigInteger codeSize,
-    Boolean codesizeReached,
-    BigInteger counter,
-    BigInteger counterMax,
-    BigInteger counterPush,
-    BigInteger index,
-    Boolean isPush,
-    Boolean isPushData,
-    BigInteger limb,
-    BigInteger nBytes,
-    BigInteger nBytesAcc,
-    UnsignedByte opcode,
-    UnsignedByte paddedBytecodeByte,
-    BigInteger programmeCounter,
-    Boolean pushFunnelBit,
-    BigInteger pushParameter,
-    BigInteger pushValueAcc,
-    BigInteger pushValueHigh,
-    BigInteger pushValueLow,
-    Boolean validJumpDestination) {
+public class Trace {
+
+  private int lineCounter;
+  private BigInteger acc;
+  private BigInteger codeFragmentIndex;
+  private BigInteger codeFragmentIndexInfty;
+  private BigInteger codeSize;
+  private Boolean codesizeReached;
+  private BigInteger counter;
+  private BigInteger counterMax;
+  private BigInteger counterPush;
+  private BigInteger index;
+  private Boolean isPush;
+  private Boolean isPushData;
+  private  BigInteger limb;
+  private BigInteger nBytes;
+  private BigInteger nBytesAcc;
+  private UnsignedByte opcode;
+  private UnsignedByte paddedBytecodeByte;
+  private BigInteger programmeCounter;
+  private Boolean pushFunnelBit;
+  private BigInteger pushParameter;
+  private BigInteger pushValueAcc;
+  private BigInteger pushValueHigh;
+  private BigInteger pushValueLow;
+  private Boolean validJumpDestination;
+
+  public Trace(int lineCounter, BigInteger acc, BigInteger codeFragmentIndex, BigInteger codeFragmentIndexInfty, BigInteger codeSize, Boolean codesizeReached, BigInteger counter, BigInteger counterMax, BigInteger counterPush, BigInteger index, Boolean isPush, Boolean isPushData, BigInteger limb, BigInteger nBytes, BigInteger nBytesAcc, UnsignedByte opcode, UnsignedByte paddedBytecodeByte, BigInteger programmeCounter, Boolean pushFunnelBit, BigInteger pushParameter, BigInteger pushValueAcc, BigInteger pushValueHigh, BigInteger pushValueLow, Boolean validJumpDestination) {
+    this.lineCounter = lineCounter;
+    this.acc = acc;
+    this.codeFragmentIndex = codeFragmentIndex;
+    this.codeFragmentIndexInfty = codeFragmentIndexInfty;
+    this.codeSize = codeSize;
+    this.codesizeReached = codesizeReached;
+    this.counter = counter;
+    this.counterMax = counterMax;
+    this.counterPush = counterPush;
+    this.index = index;
+    this.isPush = isPush;
+    this.isPushData = isPushData;
+    this.limb = limb;
+    this.nBytes = nBytes;
+    this.nBytesAcc = nBytesAcc;
+    this.opcode = opcode;
+    this.paddedBytecodeByte = paddedBytecodeByte;
+    this.programmeCounter = programmeCounter;
+    this.pushFunnelBit = pushFunnelBit;
+    this.pushParameter = pushParameter;
+    this.pushValueAcc = pushValueAcc;
+    this.pushValueHigh = pushValueHigh;
+    this.pushValueLow = pushValueLow;
+    this.validJumpDestination = validJumpDestination;
+  }
+
+  public BigInteger getAcc() {
+    return acc;
+  }
+
+  public BigInteger getCodeFragmentIndex() {
+    return codeFragmentIndex;
+  }
+
+  public BigInteger getCodeFragmentIndexInfty() {
+    return codeFragmentIndexInfty;
+  }
+
+  public BigInteger getCodeSize() {
+    return codeSize;
+  }
+
+  public Boolean getCodesizeReached() {
+    return codesizeReached;
+  }
+
+  public BigInteger getCounter() {
+    return counter;
+  }
+
+  public BigInteger getCounterMax() {
+    return counterMax;
+  }
+
+  public BigInteger getCounterPush() {
+    return counterPush;
+  }
+
+  public BigInteger getIndex() {
+    return index;
+  }
+
+  public Boolean getPush() {
+    return isPush;
+  }
+
+  public Boolean getPushData() {
+    return isPushData;
+  }
+
+  public BigInteger getLimb() {
+    return limb;
+  }
+
+  public BigInteger getnBytes() {
+    return nBytes;
+  }
+
+  public BigInteger getnBytesAcc() {
+    return nBytesAcc;
+  }
+
+  public UnsignedByte getOpcode() {
+    return opcode;
+  }
+
+  public UnsignedByte getPaddedBytecodeByte() {
+    return paddedBytecodeByte;
+  }
+
+  public BigInteger getProgrammeCounter() {
+    return programmeCounter;
+  }
+
+  public Boolean getPushFunnelBit() {
+    return pushFunnelBit;
+  }
+
+  public BigInteger getPushParameter() {
+    return pushParameter;
+  }
+
+  public BigInteger getPushValueAcc() {
+    return pushValueAcc;
+  }
+
+  public BigInteger getPushValueHigh() {
+    return pushValueHigh;
+  }
+
+  public BigInteger getPushValueLow() {
+    return pushValueLow;
+  }
+
+  public Boolean getValidJumpDestination() {
+    return validJumpDestination;
+  }
 
   static TraceBuilder builder() {
     return new TraceBuilder("rom");
