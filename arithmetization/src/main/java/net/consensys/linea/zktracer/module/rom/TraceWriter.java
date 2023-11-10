@@ -23,7 +23,6 @@ public class TraceWriter {
     Stream<Method> methodsStream = Arrays.stream(Trace.class.getDeclaredMethods());
 
     methodsStream
-        .parallel()
         .forEach(
             method -> {
               if (isMethodToTrace(method)) {
