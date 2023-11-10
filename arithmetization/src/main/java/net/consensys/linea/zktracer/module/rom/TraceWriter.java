@@ -15,12 +15,12 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Stream;
 
 public class TraceWriter {
-
+    public static final Method[] DECLARED_METHODS = net.consensys.linea.zktracer.module.add.Trace.class.getDeclaredMethods();
     private static final Map<String, BufferedWriter> stringFileWriterHashMap =
             new ConcurrentHashMap<>();
 
     public static void writeTrace(final String moduleName, final Trace traceLine) {
-        Stream<Method> methodsStream = Arrays.stream(Trace.class.getDeclaredMethods());
+        Stream<Method> methodsStream = Arrays.stream(DECLARED_METHODS);
 
         methodsStream
                 .forEach(

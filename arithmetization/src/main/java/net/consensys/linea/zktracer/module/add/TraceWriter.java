@@ -15,12 +15,15 @@ import org.apache.tuweni.bytes.Bytes;
 
 public class TraceWriter {
 
+    public static final Method[] DECLARED_METHODS = Trace.class.getDeclaredMethods();
     private static final Map<String, BufferedWriter> stringFileWriterHashMap =
             new ConcurrentHashMap<>();
 
+
     public static void writeTrace(final String moduleName, final Trace traceLine) {
-        Stream<Method> methodsStream = Arrays.stream(Trace.class.getDeclaredMethods());
+        Stream<Method> methodsStream = Arrays.stream(DECLARED_METHODS);
         methodsStream
+
                 .forEach(
                         method -> {
                             if (isGetter(method)) {
