@@ -4,15 +4,18 @@ import net.consensys.linea.zktracer.types.UnsignedByte;
 import org.apache.tuweni.bytes.Bytes;
 
 import java.io.BufferedWriter;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.lang.reflect.Method;
 import java.math.BigInteger;
 import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Stream;
+import java.util.zip.GZIPOutputStream;
 
 public class TraceWriter {
 
@@ -33,8 +36,10 @@ public class TraceWriter {
                           s -> {
                               String fileName = "/data/traces/%s/%s".formatted(moduleName, s);
                             try {
-                              return new BufferedWriter(
-                                  new FileWriter(fileName));
+                                FileOutputStream fos = new FileOutputStream(fileName);
+                                GZIPOutputStream gos = new GZIPOutputStream(fos);
+                                OutputStreamWriter osw = new OutputStreamWriter(gos, StandardCharsets.UTF_8);
+                                return new BufferedWriter(osw);
                             } catch (IOException e) {
                               System.out.println("error trace " + e.getMessage());
                               throw new RuntimeException(e);
