@@ -70,7 +70,7 @@ public class RollupGenerateConflatedTracesToFileV0 {
       tracesPath = initTracesPath();
     }
 
-    try {
+
       TraceRequestParams params = TraceRequestParams.createTraceParams(request.getParams());
 
       final long fromBlock = params.fromBlock();
@@ -93,10 +93,7 @@ public class RollupGenerateConflatedTracesToFileV0 {
       final String path = writeTraceToFile(tracer, params.runtimeVersion());
 
       return new FileTrace(params.runtimeVersion(), path);
-    } catch (Exception ex) {
-      System.err.println(ex);
-      throw new PluginRpcEndpointException(ex.getMessage());
-    }
+
   }
 
   private Path initTracesPath() {
