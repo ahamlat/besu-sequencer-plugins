@@ -23,7 +23,6 @@ public class TraceWriter {
     Stream<Method> methodsStream = Arrays.stream(Trace.class.getDeclaredMethods());
 
     methodsStream
-        .parallel()
         .forEach(
             method -> {
               if (isGetter(method)) {
@@ -86,7 +85,9 @@ public class TraceWriter {
   }
 
     private static boolean isGetter(Method method) {
-        if (method.getName().startsWith("get")) return true;
-        else return false;
+        if(!method.getName().startsWith("get"))      return false;
+        if(method.getParameterCount() != 0)   return false;
+        if(void.class.equals(method.getReturnType())) return false;
+        return true;
     }
 }
