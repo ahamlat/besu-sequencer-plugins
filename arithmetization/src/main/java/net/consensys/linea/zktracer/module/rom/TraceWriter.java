@@ -82,10 +82,14 @@ public class TraceWriter {
         stringFileWriterHashMap.forEach(
                 (s, writer) -> {
                     try {
-                        writer.fileOutputStream.close();
-                        writer.gzipOutputStream.close();
-                        writer.outputStreamWriter.close();
+                        writer.bufferedWriter.flush();
                         writer.bufferedWriter.close();
+                        writer.outputStreamWriter.flush();
+                        writer.outputStreamWriter.close();
+                        writer.gzipOutputStream.flush();
+                        writer.gzipOutputStream.close();
+                        writer.fileOutputStream.flush();
+                        writer.fileOutputStream.close();
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
