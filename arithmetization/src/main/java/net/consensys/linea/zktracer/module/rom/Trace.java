@@ -128,7 +128,7 @@ public record Trace(
         filled.set(0);
       }
 
-      acc=b;
+      acc = b;
       lineCounter++;
       return this;
     }

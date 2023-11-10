@@ -58,6 +58,11 @@ public class TraceWriter {
                         Bytes.wrap(((ByteBuffer) method.invoke(traceLine)).array())
                             .toShortHexString());
                     fileWriter.newLine();
+                  } else if (invoke instanceof UnsignedByte) {
+                      fileWriter.write(
+                              Bytes.wrap(((UnsignedByte) method.invoke(traceLine)).toBigInteger().toByteArray())
+                                      .toShortHexString());
+                      fileWriter.newLine();
                   } else {
                     // ignore null value and add a new line
                     fileWriter.newLine();

@@ -96,6 +96,7 @@ public class RollupGenerateConflatedTracesToFileV0 {
       String path = null;
       return new FileTrace(params.runtimeVersion(), path);
     } catch (Exception ex) {
+      System.err.println(ex);
       throw new PluginRpcEndpointException(ex.getMessage());
     }
   }
