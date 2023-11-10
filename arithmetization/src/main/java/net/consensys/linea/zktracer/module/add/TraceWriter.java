@@ -59,9 +59,6 @@ public class TraceWriter {
                         Bytes.wrap(((ByteBuffer) method.invoke(traceLine)).array())
                             .toShortHexString());
                     fileWriter.newLine();
-                  } else {
-                    // ignore null value and add a new line
-                    fileWriter.newLine();
                   }
                 } catch (Exception e) {
                   System.out.println("error trace " + method);
