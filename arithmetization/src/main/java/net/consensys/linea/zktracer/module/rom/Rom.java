@@ -197,6 +197,8 @@ public class Rom implements Module {
       traceChunk(chunk, cfi, cfiInfty, trace);
     }
 
-    return new RomTrace(trace.build());
+    final RomTrace romTrace = new RomTrace(trace.build());
+    TraceWriter.flush();
+    return romTrace;
   }
 }
