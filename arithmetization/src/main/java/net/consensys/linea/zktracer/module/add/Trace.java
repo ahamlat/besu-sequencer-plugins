@@ -24,22 +24,98 @@ import net.consensys.linea.zktracer.types.UnsignedByte;
  * WARNING: This code is generated automatically. Any modifications to this code may be overwritten
  * and could lead to unexpected behavior. Please DO NOT ATTEMPT TO MODIFY this code directly.
  */
-public record Trace(
-    int lineCounter,
-    BigInteger acc1,
-    BigInteger acc2,
-    BigInteger arg1Hi,
-    BigInteger arg1Lo,
-    BigInteger arg2Hi,
-    BigInteger arg2Lo,
-    UnsignedByte byte1,
-    UnsignedByte byte2,
-    BigInteger ct,
-    BigInteger inst,
-    Boolean overflow,
-    BigInteger resHi,
-    BigInteger resLo,
-    BigInteger stamp) {
+public class Trace {
+
+  private int lineCounter;
+  private BigInteger acc1;
+  private BigInteger acc2;
+  private BigInteger arg1Hi;
+  private BigInteger arg1Lo;
+  private BigInteger arg2Hi;
+  private BigInteger arg2Lo;
+  private UnsignedByte byte1;
+  private UnsignedByte byte2;
+  private BigInteger ct;
+  private BigInteger inst;
+  private Boolean overflow;
+  private  BigInteger resHi;
+  private BigInteger resLo;
+  private BigInteger stamp;
+
+  public Trace(int lineCounter, BigInteger acc1, BigInteger acc2, BigInteger arg1Hi, BigInteger arg1Lo, BigInteger arg2Hi, BigInteger arg2Lo, UnsignedByte byte1, UnsignedByte byte2, BigInteger ct, BigInteger inst, Boolean overflow, BigInteger resHi, BigInteger resLo, BigInteger stamp) {
+    this.lineCounter = lineCounter;
+    this.acc1 = acc1;
+    this.acc2 = acc2;
+    this.arg1Hi = arg1Hi;
+    this.arg1Lo = arg1Lo;
+    this.arg2Hi = arg2Hi;
+    this.arg2Lo = arg2Lo;
+    this.byte1 = byte1;
+    this.byte2 = byte2;
+    this.ct = ct;
+    this.inst = inst;
+    this.overflow = overflow;
+    this.resHi = resHi;
+    this.resLo = resLo;
+    this.stamp = stamp;
+  }
+
+
+  public BigInteger getAcc1() {
+    return acc1;
+  }
+
+  public BigInteger getAcc2() {
+    return acc2;
+  }
+
+  public BigInteger getArg1Hi() {
+    return arg1Hi;
+  }
+
+  public BigInteger getArg1Lo() {
+    return arg1Lo;
+  }
+
+  public BigInteger getArg2Hi() {
+    return arg2Hi;
+  }
+
+  public BigInteger getArg2Lo() {
+    return arg2Lo;
+  }
+
+  public UnsignedByte getByte1() {
+    return byte1;
+  }
+
+  public UnsignedByte getByte2() {
+    return byte2;
+  }
+
+  public BigInteger getCt() {
+    return ct;
+  }
+
+  public BigInteger getInst() {
+    return inst;
+  }
+
+  public Boolean getOverflow() {
+    return overflow;
+  }
+
+  public BigInteger getResHi() {
+    return resHi;
+  }
+
+  public BigInteger getResLo() {
+    return resLo;
+  }
+
+  public BigInteger getStamp() {
+    return stamp;
+  }
 
   static TraceBuilder builder(String formattedDate) {
     return new TraceBuilder("add", formattedDate);
