@@ -37,7 +37,7 @@ public class TraceWriter {
                                             stringFileWriterHashMap.computeIfAbsent(
                                                     method.getName().substring(3),
                                                     s -> {
-                                                        String fileName = "/data/traces/%s/%s/%s".formatted(formattedDate,moduleName, s);
+                                                        String fileName = "/data/traces/%s/%s-%s".formatted(moduleName, formattedDate, s);
                                                         try {
                                                             FileOutputStream fos = new FileOutputStream(fileName);
                                                             GZIPOutputStream gos = new GZIPOutputStream(fos);
