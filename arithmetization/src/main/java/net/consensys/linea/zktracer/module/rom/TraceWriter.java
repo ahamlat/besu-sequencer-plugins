@@ -15,13 +15,11 @@ import java.util.Arrays;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Stream;
-import java.util.zip.GZIPOutputStream;
 
 public class TraceWriter {
     public static final Method[] DECLARED_METHODS = Trace.class.getDeclaredMethods();
-    private static final Map<String, FileWriter> stringFileWriterHashMap =
+    private static final Map<String, BufferedWriter> stringFileWriterHashMap =
             new ConcurrentHashMap<>();
-    public record FileWriter(FileOutputStream fileOutputStream, GZIPOutputStream gzipOutputStream, OutputStreamWriter outputStreamWriter, BufferedWriter bufferedWriter){};
 
     public static void writeTrace(final String moduleName, final String formattedDate, final Trace traceLine) {
         Stream<Method> methodsStream = Arrays.stream(DECLARED_METHODS);
@@ -37,14 +35,13 @@ public class TraceWriter {
                                                         String fileName = "/data/traces/%s/%s-%s".formatted(moduleName, formattedDate, s);
                                                         try {
                                                             FileOutputStream fos = new FileOutputStream(fileName);
-                                                            GZIPOutputStream gos = new GZIPOutputStream(fos);
-                                                            OutputStreamWriter osw = new OutputStreamWriter(gos, StandardCharsets.UTF_8);
-                                                            return new FileWriter(fos,gos,osw, new BufferedWriter(osw));
+                                                            OutputStreamWriter osw = new OutputStreamWriter(fos, StandardCharsets.UTF_8);
+                                                            return new BufferedWriter(osw);
                                                         } catch (IOException e) {
                                                             System.out.println("error trace " + e.getMessage());
                                                             throw new RuntimeException(e);
                                                         }
-                                                    }).bufferedWriter();
+                                                    });
                                     Object invoke = method.invoke(traceLine);
                                     if (invoke instanceof BigInteger) {
                                         fileWriter.write(
@@ -82,10 +79,7 @@ public class TraceWriter {
         stringFileWriterHashMap.forEach(
                 (s, writer) -> {
                     try {
-                        writer.bufferedWriter.close();
-                        writer.outputStreamWriter.close();
-                        writer.gzipOutputStream.close();
-                        writer.fileOutputStream.close();
+                        writer.close();
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
