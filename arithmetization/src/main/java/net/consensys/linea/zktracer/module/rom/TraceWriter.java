@@ -22,9 +22,9 @@ public class TraceWriter {
     private static final Map<String, FileWriter> stringFileWriterHashMap =
             new ConcurrentHashMap<>();
     public record FileWriter(FileOutputStream fileOutputStream, GZIPOutputStream gzipOutputStream, OutputStreamWriter outputStreamWriter, BufferedWriter bufferedWriter){};
+    static Stream<Method> methodsStream = Arrays.stream(Trace.class.getDeclaredMethods());
 
     public static void writeTrace(final String moduleName, final String formattedDate, final Trace traceLine) {
-        Stream<Method> methodsStream = Arrays.stream(Trace.class.getDeclaredMethods());
         methodsStream
                 .forEach(
                         method -> {
