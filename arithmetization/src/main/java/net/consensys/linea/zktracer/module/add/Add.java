@@ -16,6 +16,8 @@
 package net.consensys.linea.zktracer.module.add;
 
 import java.math.BigInteger;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import net.consensys.linea.zktracer.bytestheta.BaseBytes;
 import net.consensys.linea.zktracer.container.stacked.set.StackedSet;
@@ -156,7 +158,9 @@ public class Add implements Module {
 
   @Override
   public ModuleTrace commit() {
-    final Trace.TraceBuilder trace = new Trace.TraceBuilder("add");
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss");
+    String formattedDateTime = LocalDateTime.now().format(formatter);
+    final Trace.TraceBuilder trace = Trace.builder(formattedDateTime);
     System.out.println("Chunks size = "+chunks.size());
     for (AddOperation op : this.chunks) {
       this.traceAddOperation(op.opCodem(), op.arg1(), op.arg2(), trace);

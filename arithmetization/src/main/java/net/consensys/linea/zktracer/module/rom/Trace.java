@@ -170,8 +170,8 @@ public class Trace {
     return validJumpDestination;
   }
 
-  static TraceBuilder builder() {
-    return new TraceBuilder("rom");
+  static TraceBuilder builder(String formattedDate) {
+    return new TraceBuilder("rom",formattedDate);
   }
 
   public int size() {
@@ -182,9 +182,11 @@ public class Trace {
     private final BitSet filled = new BitSet();
     private final String moduleName;
     private int lineCounter = 0;
+    private String formattedDate;
 
-    public TraceBuilder(final String moduleName) {
+    public TraceBuilder(final String moduleName, final String formattedDate) {
       this.moduleName = moduleName;
+      this.formattedDate = formattedDate;
     }
 
     private BigInteger acc;
@@ -612,7 +614,7 @@ public class Trace {
 
       filled.clear();
 
-      TraceWriter.writeTrace(moduleName, build());
+      TraceWriter.writeTrace(moduleName, formattedDate, build());
 
       return this;
     }

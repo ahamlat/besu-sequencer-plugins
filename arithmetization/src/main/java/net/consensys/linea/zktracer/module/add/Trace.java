@@ -41,8 +41,9 @@ public record Trace(
     BigInteger resLo,
     BigInteger stamp) {
 
-  static TraceBuilder builder() {
-    return new TraceBuilder("add");
+  static TraceBuilder builder(String formattedDate) {
+    return new TraceBuilder("add", formattedDate);
+
   }
 
   public int size() {
@@ -52,6 +53,7 @@ public record Trace(
   static class TraceBuilder {
     private final BitSet filled = new BitSet();
     private final String moduleName;
+    private final String formattedDate;
 
     private int lineCounter = 0;
     private BigInteger acc1;
@@ -69,8 +71,9 @@ public record Trace(
     private BigInteger resLo;
     private BigInteger stamp;
 
-    public TraceBuilder(final String moduleName) {
+    public TraceBuilder(final String moduleName, final String formattedDate) {
       this.moduleName = moduleName;
+      this.formattedDate = formattedDate;
     }
 
     public int size() {
@@ -308,7 +311,7 @@ public record Trace(
 
       filled.clear();
 
-      TraceWriter.writeTrace(moduleName, build());
+      TraceWriter.writeTrace(moduleName, formattedDate, build());
 
       return this;
     }

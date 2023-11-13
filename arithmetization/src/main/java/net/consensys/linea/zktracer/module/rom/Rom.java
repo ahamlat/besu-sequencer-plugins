@@ -18,6 +18,8 @@ package net.consensys.linea.zktracer.module.rom;
 import static net.consensys.linea.zktracer.module.rlputils.Pattern.padToGivenSizeWithRightZero;
 
 import java.math.BigInteger;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import net.consensys.linea.zktracer.module.Module;
 import net.consensys.linea.zktracer.module.ModuleTrace;
@@ -188,7 +190,9 @@ public class Rom implements Module {
 
   @Override
   public ModuleTrace commit() {
-    final Trace.TraceBuilder trace = Trace.builder();
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss");
+    String formattedDateTime = LocalDateTime.now().format(formatter);
+    final Trace.TraceBuilder trace = Trace.builder(formattedDateTime);
 
     int cfi = 0;
     final int cfiInfty = this.romLex.sortedChunks.size();
