@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.LocalDateTime;
 import java.util.zip.GZIPOutputStream;
 
 import com.fasterxml.jackson.core.JsonEncoding;
@@ -71,6 +72,7 @@ public class RollupGenerateConflatedTracesToFileV0 {
     }
 
     try {
+      System.out.println("** start time : " + LocalDateTime.now()+" **");
       TraceRequestParams params = TraceRequestParams.createTraceParams(request.getParams());
 
       final long fromBlock = params.fromBlock();
@@ -89,10 +91,11 @@ public class RollupGenerateConflatedTracesToFileV0 {
             tracer.traceEndConflation();
           },
           tracer);
-
+      System.out.println("** end of trace generation : " + LocalDateTime.now()+" **");
       // All the blocks are already executer and chuncks generated
       tracer.writeTrace();
 
+      System.out.println("** end of traces writing : " + LocalDateTime.now()+" **");
       String path = null;
       return new FileTrace(params.runtimeVersion(), path);
     } catch (Exception ex) {
