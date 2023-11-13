@@ -18,13 +18,13 @@ import java.util.stream.Stream;
 import java.util.zip.GZIPOutputStream;
 
 public class TraceWriter {
-
+    public static final Method[] DECLARED_METHODS = Trace.class.getDeclaredMethods();
     private static final Map<String, FileWriter> stringFileWriterHashMap =
             new ConcurrentHashMap<>();
     public record FileWriter(FileOutputStream fileOutputStream, GZIPOutputStream gzipOutputStream, OutputStreamWriter outputStreamWriter, BufferedWriter bufferedWriter){};
-    static Stream<Method> methodsStream = Arrays.stream(Trace.class.getDeclaredMethods());
 
     public static void writeTrace(final String moduleName, final String formattedDate, final Trace traceLine) {
+        Stream<Method> methodsStream = Arrays.stream(DECLARED_METHODS);
         methodsStream
                 .forEach(
                         method -> {
