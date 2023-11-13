@@ -48,15 +48,20 @@ public class TraceWriter {
                                                     }).bufferedWriter();
                                     Object invoke = method.invoke(traceLine);
                                     if (invoke instanceof BigInteger) {
-                                        fileWriter.write(Arrays.toString(((BigInteger) method.invoke(traceLine)).toByteArray()));
+                                        fileWriter.write(
+                                                Bytes.wrap(((BigInteger) method.invoke(traceLine)).toByteArray())
+                                                        .toShortHexString());
                                         fileWriter.newLine();
                                     } else if (invoke instanceof Boolean) {
                                         fileWriter.write(
                                                 ((Boolean) method.invoke(traceLine))
-                                                        ? (byte) 0x01 : (byte) 0x00);
+                                                        ? Bytes.of((byte) 0x01).toShortHexString()
+                                                        : Bytes.of((byte) 0x00).toShortHexString());
                                         fileWriter.newLine();
                                     } else if (invoke instanceof ByteBuffer) {
-                                        fileWriter.write(Arrays.toString(((ByteBuffer) method.invoke(traceLine)).array()));
+                                        fileWriter.write(
+                                                Bytes.wrap(((ByteBuffer) method.invoke(traceLine)).array())
+                                                        .toShortHexString());
                                         fileWriter.newLine();
                                     } else {
                                         // ignore null value and add a new line
