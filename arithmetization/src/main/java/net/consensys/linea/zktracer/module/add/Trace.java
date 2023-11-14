@@ -387,7 +387,7 @@ public class Trace {
 
       filled.clear();
 
-      TraceWriter.writeTrace(moduleName, formattedDate, build());
+      TraceWriter.writeTrace(build());
 
       return this;
     }

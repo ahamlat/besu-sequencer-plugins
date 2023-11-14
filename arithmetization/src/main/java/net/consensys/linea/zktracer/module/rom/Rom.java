@@ -194,6 +194,7 @@ public class Rom implements Module {
     String formattedDateTime = LocalDateTime.now().format(formatter);
     final Trace.TraceBuilder trace = Trace.builder(formattedDateTime);
 
+    TraceWriter.init("rom",formattedDateTime);
     int cfi = 0;
     final int cfiInfty = this.romLex.sortedChunks.size();
     for (RomChunk chunk : this.romLex.sortedChunks) {

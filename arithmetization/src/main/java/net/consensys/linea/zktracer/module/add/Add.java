@@ -161,7 +161,8 @@ public class Add implements Module {
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss");
     String formattedDateTime = LocalDateTime.now().format(formatter);
     final Trace.TraceBuilder trace = Trace.builder(formattedDateTime);
-    System.out.println("Chunks size = "+chunks.size());
+
+    TraceWriter.init("add", formattedDateTime);
     for (AddOperation op : this.chunks) {
       this.traceAddOperation(op.opCodem(), op.arg1(), op.arg2(), trace);
     }

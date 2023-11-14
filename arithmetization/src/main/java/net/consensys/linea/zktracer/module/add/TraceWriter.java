@@ -1,5 +1,7 @@
 package net.consensys.linea.zktracer.module.add;
 
+import org.apache.tuweni.bytes.Bytes;
+
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -13,6 +15,7 @@ public class TraceWriter {
   public static BufferedWriter arg1HiBuffer;
   public static BufferedWriter arg1LoBuffer;
   public static BufferedWriter arg2HiBuffer;
+  public static BufferedWriter arg2LoBuffer;
   public static BufferedWriter byte1Buffer;
   public static BufferedWriter byte2Buffer;
   public static BufferedWriter ctBuffer;
@@ -46,6 +49,10 @@ public class TraceWriter {
           new BufferedWriter(
               new FileWriter(
                   "/data/traces/%s/%s-%s".formatted(moduleName, formattedDate, "arg2Hi.txt")));
+      arg2LoBuffer =
+              new BufferedWriter(
+                      new FileWriter(
+                              "/data/traces/%s/%s-%s".formatted(moduleName, formattedDate, "arg2Lo.txt")));
       byte1Buffer =
           new BufferedWriter(
               new FileWriter(
@@ -87,43 +94,61 @@ public class TraceWriter {
 
     try {
       if (traceLine.getAcc1() != null) {
-        acc1Buffer.write(counter + " " + traceLine.getAcc1().toString() + "\n");
+        acc1Buffer.write(counter + " " + Bytes.wrap(traceLine.getAcc1().toByteArray())
+                .toShortHexString() + "\n");
       }
       if (traceLine.getAcc2() != null) {
-        acc2Buffer.write(counter + " " + traceLine.getAcc2().toString() + "\n");
+        acc2Buffer.write(counter + " " + Bytes.wrap(traceLine.getAcc2().toByteArray())
+                .toShortHexString()+ "\n");
       }
       if (traceLine.getArg1Hi() != null) {
-        arg1HiBuffer.write(counter + " " + traceLine.getArg1Hi().toString() + "\n");
+        arg1HiBuffer.write(counter + " " + Bytes.wrap(traceLine.getArg1Hi().toByteArray())
+                .toShortHexString() + "\n");
       }
       if (traceLine.getArg1Lo() != null) {
-        arg1LoBuffer.write(counter + " " + traceLine.getArg1Lo().toString() + "\n");
+        arg1LoBuffer.write(counter + " " + Bytes.wrap(traceLine.getArg1Lo().toByteArray())
+                .toShortHexString() + "\n");
       }
       if (traceLine.getArg2Hi() != null) {
-        arg2HiBuffer.write(counter + " " + traceLine.getArg2Hi().toString() + "\n");
+        arg2HiBuffer.write(counter + " " + Bytes.wrap(traceLine.getArg2Hi().toByteArray())
+                .toShortHexString() + "\n");
+      }
+      if (traceLine.getArg2Hi() != null) {
+        arg2LoBuffer.write(counter + " " + Bytes.wrap(traceLine.getArg2Lo().toByteArray())
+                .toShortHexString() + "\n");
       }
       if (traceLine.getByte1() != null) {
-        byte1Buffer.write(counter + " " + traceLine.getByte1().toString() + "\n");
+        byte1Buffer.write(counter + " " + Bytes.wrap(traceLine.getByte1().toBigInteger().toByteArray())
+                .toShortHexString() + "\n");
       }
       if (traceLine.getByte2() != null) {
-        byte2Buffer.write(counter + " " + traceLine.getByte2().toString() + "\n");
+        byte2Buffer.write(counter + " " + Bytes.wrap(traceLine.getByte2().toBigInteger().toByteArray())
+                .toShortHexString() + "\n");
       }
       if (traceLine.getCt() != null) {
-        ctBuffer.write(counter + " " + traceLine.getCt().toString() + "\n");
+        ctBuffer.write(counter + " " + Bytes.wrap(traceLine.getCt().toByteArray())
+                .toShortHexString() + "\n");
       }
       if (traceLine.getInst() != null) {
-        instBuffer.write(counter + " " + traceLine.getInst().toString() + "\n");
+        instBuffer.write(counter + " " + Bytes.wrap(traceLine.getInst().toByteArray())
+                .toShortHexString() + "\n");
       }
       if (traceLine.getOverflow() != null) {
-        overflowBuffer.write(counter + " " + traceLine.getOverflow().toString() + "\n");
+        overflowBuffer.write(counter + " " +  (traceLine.getOverflow()
+                ? Bytes.of((byte) 0x01).toShortHexString()
+                : Bytes.of((byte) 0x00).toShortHexString()) + "\n");
       }
       if (traceLine.getResHi() != null) {
-        resHiBuffer.write(counter + " " + traceLine.getResHi().toString() + "\n");
+        resHiBuffer.write(counter + " " + Bytes.wrap(traceLine.getResHi().toByteArray())
+                .toShortHexString() + "\n");
       }
       if (traceLine.getResLo() != null) {
-        resLoBuffer.write(counter + " " + traceLine.getResLo().toString() + "\n");
+        resLoBuffer.write(counter + " " + Bytes.wrap(traceLine.getResLo().toByteArray())
+                .toShortHexString() + "\n");
       }
       if (traceLine.getStamp() != null) {
-        stampBuffer.write(counter + " " + traceLine.getStamp().toString() + "\n");
+        stampBuffer.write(counter + " " + Bytes.wrap(traceLine.getStamp().toByteArray())
+                .toShortHexString() + "\n");
       }
       counter++;
     } catch (IOException e) {
@@ -139,6 +164,7 @@ public class TraceWriter {
       arg1HiBuffer.close();
       arg1LoBuffer.close();
       arg2HiBuffer.close();
+      arg2LoBuffer.close();
       byte1Buffer.close();
       byte2Buffer.close();
       ctBuffer.close();
