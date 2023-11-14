@@ -34,7 +34,6 @@ public class TraceWriter {
     public static BufferedWriter pushValueLowBuffer;
     public static BufferedWriter validJumpDestinationBuffer;
 
-    static int counter = 0;
 
     public static void init(final String moduleName, final String formattedDate) {
         try {
@@ -138,112 +137,89 @@ public class TraceWriter {
     public static void writeTrace(final Trace traceLine) {
 
         try {
-            if (traceLine.getAcc() != null) {
-                accBuffer.write(counter + " " + Bytes.wrap(traceLine.getAcc().toByteArray())
+                accBuffer.write(Bytes.wrap(traceLine.getAcc().toByteArray())
                         .toShortHexString() + "\n");
-            }
-            // Write other attributes here
-            if (traceLine.getCodeFragmentIndex() != null) {
-                codeFragmentIndexBuffer.write(counter + " " + Bytes.wrap(traceLine.getCodeFragmentIndex().toByteArray())
+
+                codeFragmentIndexBuffer.write(Bytes.wrap(traceLine.getCodeFragmentIndex().toByteArray())
                         .toShortHexString() + "\n");
-            }
-            if (traceLine.getCodeFragmentIndexInfty() != null) {
-                codeFragmentIndexInftyBuffer.write(counter + " " + Bytes.wrap(traceLine.getCodeFragmentIndexInfty().toByteArray())
+
+                codeFragmentIndexInftyBuffer.write(Bytes.wrap(traceLine.getCodeFragmentIndexInfty().toByteArray())
                         .toShortHexString() + "\n");
-            }
-            if (traceLine.getCodeSize() != null) {
-                codeSizeBuffer.write(counter + " " + Bytes.wrap(traceLine.getCodeSize().toByteArray())
+
+                codeSizeBuffer.write(Bytes.wrap(traceLine.getCodeSize().toByteArray())
                         .toShortHexString() + "\n");
-            }
-            if (traceLine.getCodesizeReached() != null) {
-                codesizeReachedBuffer.write(counter + " " +  (traceLine.getCodesizeReached()
+
+                codesizeReachedBuffer.write( (traceLine.getCodesizeReached()
                         ? Bytes.of((byte) 0x01).toShortHexString()
                         : Bytes.of((byte) 0x00).toShortHexString()) + "\n");
-            }
-            if (traceLine.getCounter() != null) {
-                counterBuffer.write(counter + " " + Bytes.wrap(traceLine.getCounter().toByteArray())
+
+                counterBuffer.write(Bytes.wrap(traceLine.getCounter().toByteArray())
                         .toShortHexString() + "\n");
-            }
-            if (traceLine.getCounterMax() != null) {
-                counterMaxBuffer.write(counter + " " + Bytes.wrap(traceLine.getCounterMax().toByteArray())
+
+                counterMaxBuffer.write(Bytes.wrap(traceLine.getCounterMax().toByteArray())
                         .toShortHexString() + "\n");
-            }
-            if (traceLine.getCounterPush() != null) {
-                counterPushButton.write(counter + " " + Bytes.wrap(traceLine.getCounterPush().toByteArray())
+
+                counterPushButton.write(Bytes.wrap(traceLine.getCounterPush().toByteArray())
                         .toShortHexString() + "\n");
-            }
-            if (traceLine.getIndex() != null) {
-                indexBuffer.write(counter + " " + Bytes.wrap(traceLine.getIndex().toByteArray())
+
+                indexBuffer.write(Bytes.wrap(traceLine.getIndex().toByteArray())
                         .toShortHexString() + "\n");
-            }
-            if (traceLine.getPush() != null) {
-                isPushButton.write(counter + " " +  (traceLine.getPush()
+
+                isPushButton.write( (traceLine.getPush()
                         ? Bytes.of((byte) 0x01).toShortHexString()
                         : Bytes.of((byte) 0x00).toShortHexString()) + "\n");
-            }
-            if (traceLine.getPushData() != null) {
-                isPushDataBuffer.write(counter + " " +  (traceLine.getPushData()
+
+                isPushDataBuffer.write( (traceLine.getPushData()
                         ? Bytes.of((byte) 0x01).toShortHexString()
                         : Bytes.of((byte) 0x00).toShortHexString()) + "\n");
-            }
-            if (traceLine.getLimb() != null) {
-                limbBuffer.write(counter + " " + Bytes.wrap(traceLine.getLimb().toByteArray())
+
+                limbBuffer.write(Bytes.wrap(traceLine.getLimb().toByteArray())
                         .toShortHexString() + "\n");
-            }
-            if (traceLine.getnBytes() != null) {
-                nBytesBuffer.write(counter + " " + Bytes.wrap(traceLine.getnBytes().toByteArray())
+
+                nBytesBuffer.write(Bytes.wrap(traceLine.getnBytes().toByteArray())
                         .toShortHexString() + "\n");
-            }
-            if (traceLine.getnBytesAcc() != null) {
-                nBytesAccBuffer.write(counter + " " + Bytes.wrap(traceLine.getnBytesAcc().toByteArray())
+
+                nBytesAccBuffer.write(Bytes.wrap(traceLine.getnBytesAcc().toByteArray())
                         .toShortHexString() + "\n");
-            }
-            if (traceLine.getOpcode() != null) {
-                opcodeBuffer.write(counter + " " + Bytes.wrap(traceLine.getOpcode().toBigInteger().toByteArray())
+
+                opcodeBuffer.write(Bytes.wrap(traceLine.getOpcode().toBigInteger().toByteArray())
                         .toShortHexString() + "\n");
-            }
-            if (traceLine.getPaddedBytecodeByte() != null) {
-                paddedBytecodeByteBuffer.write(counter + " " + Bytes.wrap(traceLine.getPaddedBytecodeByte().toBigInteger().toByteArray())
+
+                paddedBytecodeByteBuffer.write(Bytes.wrap(traceLine.getPaddedBytecodeByte().toBigInteger().toByteArray())
                         .toShortHexString() + "\n");
-            }
-            if (traceLine.getProgrammeCounter() != null) {
-                programmeCounterBuffer.write(counter + " " + Bytes.wrap(traceLine.getProgrammeCounter().toByteArray())
+
+                programmeCounterBuffer.write(Bytes.wrap(traceLine.getProgrammeCounter().toByteArray())
                         .toShortHexString() + "\n");
-            }
-            if (traceLine.getPushFunnelBit() != null) {
-                pushFunnelBitBuffer.write(counter + " " +  (traceLine.getPushFunnelBit()
+
+
+                pushFunnelBitBuffer.write( (traceLine.getPushFunnelBit()
                         ? Bytes.of((byte) 0x01).toShortHexString()
                         : Bytes.of((byte) 0x00).toShortHexString()) + "\n");
-            }
-            if (traceLine.getPushParameter() != null) {
-                pushParameterBuffer.write(counter + " " + Bytes.wrap(traceLine.getPushParameter().toByteArray())
+
+
+                pushParameterBuffer.write(Bytes.wrap(traceLine.getPushParameter().toByteArray())
                         .toShortHexString() + "\n");
-            }
-            if (traceLine.getPushValueAcc() != null) {
-                pushValueAccBuffer.write(counter + " " + Bytes.wrap(traceLine.getPushValueAcc().toByteArray())
+
+                pushValueAccBuffer.write(Bytes.wrap(traceLine.getPushValueAcc().toByteArray())
                         .toShortHexString() + "\n");
-            }
-            if (traceLine.getPushValueHigh() != null) {
-                pushValueHighBuffer.write(counter + " " + Bytes.wrap(traceLine.getPushValueHigh().toByteArray())
+
+                pushValueHighBuffer.write(Bytes.wrap(traceLine.getPushValueHigh().toByteArray())
                         .toShortHexString() + "\n");
-            }
-            if (traceLine.getPushValueLow() != null) {
-                pushValueLowBuffer.write(counter + " " + Bytes.wrap(traceLine.getPushValueLow().toByteArray())
+
+           
+                pushValueLowBuffer.write(Bytes.wrap(traceLine.getPushValueLow().toByteArray())
                         .toShortHexString() + "\n");
-            }
-            if (traceLine.getValidJumpDestination() != null) {
-                validJumpDestinationBuffer.write(counter + " " +  (traceLine.getValidJumpDestination()
+            
+           
+                validJumpDestinationBuffer.write((traceLine.getValidJumpDestination()
                         ? Bytes.of((byte) 0x01).toShortHexString()
                         : Bytes.of((byte) 0x00).toShortHexString()) + "\n");
-            }
-            counter++;
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public static void flush() {
-        counter = 0;
         try {
             accBuffer.close();
             codeFragmentIndexBuffer.close();

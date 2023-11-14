@@ -25,8 +25,6 @@ public class TraceWriter {
   public static BufferedWriter resLoBuffer;
   public static BufferedWriter stampBuffer;
 
-  static int counter = 0;
-
   public static void init(final String moduleName, final String formattedDate) {
     try {
       acc1Buffer =
@@ -93,71 +91,56 @@ public class TraceWriter {
   public static void writeTrace(final Trace traceLine) {
 
     try {
-      if (traceLine.getAcc1() != null) {
-        acc1Buffer.write(counter + " " + Bytes.wrap(traceLine.getAcc1().toByteArray())
+
+        acc1Buffer.write(Bytes.wrap(traceLine.getAcc1().toByteArray())
                 .toShortHexString() + "\n");
-      }
-      if (traceLine.getAcc2() != null) {
-        acc2Buffer.write(counter + " " + Bytes.wrap(traceLine.getAcc2().toByteArray())
+
+        acc2Buffer.write(Bytes.wrap(traceLine.getAcc2().toByteArray())
                 .toShortHexString()+ "\n");
-      }
-      if (traceLine.getArg1Hi() != null) {
-        arg1HiBuffer.write(counter + " " + Bytes.wrap(traceLine.getArg1Hi().toByteArray())
+
+        arg1HiBuffer.write(Bytes.wrap(traceLine.getArg1Hi().toByteArray())
                 .toShortHexString() + "\n");
-      }
-      if (traceLine.getArg1Lo() != null) {
-        arg1LoBuffer.write(counter + " " + Bytes.wrap(traceLine.getArg1Lo().toByteArray())
+
+        arg1LoBuffer.write(Bytes.wrap(traceLine.getArg1Lo().toByteArray())
                 .toShortHexString() + "\n");
-      }
-      if (traceLine.getArg2Hi() != null) {
-        arg2HiBuffer.write(counter + " " + Bytes.wrap(traceLine.getArg2Hi().toByteArray())
+
+        arg2HiBuffer.write(Bytes.wrap(traceLine.getArg2Hi().toByteArray())
                 .toShortHexString() + "\n");
-      }
-      if (traceLine.getArg2Hi() != null) {
-        arg2LoBuffer.write(counter + " " + Bytes.wrap(traceLine.getArg2Lo().toByteArray())
+
+        arg2LoBuffer.write(Bytes.wrap(traceLine.getArg2Lo().toByteArray())
                 .toShortHexString() + "\n");
-      }
-      if (traceLine.getByte1() != null) {
-        byte1Buffer.write(counter + " " + Bytes.wrap(traceLine.getByte1().toBigInteger().toByteArray())
+
+        byte1Buffer.write(Bytes.wrap(traceLine.getByte1().toBigInteger().toByteArray())
                 .toShortHexString() + "\n");
-      }
-      if (traceLine.getByte2() != null) {
-        byte2Buffer.write(counter + " " + Bytes.wrap(traceLine.getByte2().toBigInteger().toByteArray())
+
+        byte2Buffer.write(Bytes.wrap(traceLine.getByte2().toBigInteger().toByteArray())
                 .toShortHexString() + "\n");
-      }
-      if (traceLine.getCt() != null) {
-        ctBuffer.write(counter + " " + Bytes.wrap(traceLine.getCt().toByteArray())
+
+        ctBuffer.write(Bytes.wrap(traceLine.getCt().toByteArray())
                 .toShortHexString() + "\n");
-      }
-      if (traceLine.getInst() != null) {
-        instBuffer.write(counter + " " + Bytes.wrap(traceLine.getInst().toByteArray())
+
+        instBuffer.write(Bytes.wrap(traceLine.getInst().toByteArray())
                 .toShortHexString() + "\n");
-      }
-      if (traceLine.getOverflow() != null) {
-        overflowBuffer.write(counter + " " +  (traceLine.getOverflow()
+
+        overflowBuffer.write( (traceLine.getOverflow()
                 ? Bytes.of((byte) 0x01).toShortHexString()
                 : Bytes.of((byte) 0x00).toShortHexString()) + "\n");
-      }
-      if (traceLine.getResHi() != null) {
-        resHiBuffer.write(counter + " " + Bytes.wrap(traceLine.getResHi().toByteArray())
+
+        resHiBuffer.write(Bytes.wrap(traceLine.getResHi().toByteArray())
                 .toShortHexString() + "\n");
-      }
-      if (traceLine.getResLo() != null) {
-        resLoBuffer.write(counter + " " + Bytes.wrap(traceLine.getResLo().toByteArray())
+
+        resLoBuffer.write(Bytes.wrap(traceLine.getResLo().toByteArray())
                 .toShortHexString() + "\n");
-      }
-      if (traceLine.getStamp() != null) {
-        stampBuffer.write(counter + " " + Bytes.wrap(traceLine.getStamp().toByteArray())
+
+        stampBuffer.write(Bytes.wrap(traceLine.getStamp().toByteArray())
                 .toShortHexString() + "\n");
-      }
-      counter++;
+
     } catch (IOException e) {
       e.printStackTrace();
     }
   }
 
   public static void flush() {
-    counter = 0;
     try {
       acc1Buffer.close();
       acc2Buffer.close();
